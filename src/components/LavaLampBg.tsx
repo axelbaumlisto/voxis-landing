@@ -207,11 +207,12 @@ export default function LavaLampBg() {
     gl.uniform1f(gl.getUniformLocation(prog, "uSpecW"), 0.6);
     gl.uniform1f(gl.getUniformLocation(prog, "uSaturation"), 1.7);
     gl.uniform1f(gl.getUniformLocation(prog, "uZoom"), 1.7);
-    // Palette (same as theme manifest: ff3b1f / ff7a00 / ffb300 / ff2d6f)
-    gl.uniform3f(gl.getUniformLocation(prog, "uCol1"), 1.0, 0.231, 0.121);
-    gl.uniform3f(gl.getUniformLocation(prog, "uCol2"), 1.0, 0.478, 0.0);
-    gl.uniform3f(gl.getUniformLocation(prog, "uCol3"), 1.0, 0.702, 0.0);
-    gl.uniform3f(gl.getUniformLocation(prog, "uCol4"), 1.0, 0.176, 0.435);
+    // Brand-aligned cool palette: cyan → blue → purple → teal
+    // (matches --color-accent: #22d3ee and Architecture stage-1 hue)
+    gl.uniform3f(gl.getUniformLocation(prog, "uCol1"), 0.13, 0.827, 0.933); // #22d3ee cyan
+    gl.uniform3f(gl.getUniformLocation(prog, "uCol2"), 0.231, 0.510, 0.965); // #3b82f6 blue
+    gl.uniform3f(gl.getUniformLocation(prog, "uCol3"), 0.659, 0.333, 0.969); // #a855f7 purple
+    gl.uniform3f(gl.getUniformLocation(prog, "uCol4"), 0.204, 0.827, 0.706); // teal
 
     let phase = 0;
     let prevNow = performance.now();
