@@ -12,48 +12,45 @@ export interface Step {
   hex: string;
 }
 
-// Shared technical metadata (DRY)
+// Unified cyan brand ramp: stage identity comes from icon + eyebrow number,
+// not colour. Keeps cohesion with --color-accent (#22d3ee) and LavaLamp palette.
+const CYAN = {
+  glow: "shadow-[0_0_40px_rgba(34,211,238,0.4)] border-cyan-400",
+  iconColor: "text-cyan-400",
+  hex: "#22d3ee",
+} as const;
+
 const layers = [
   {
     iconName: "terminal" as IconKey,
     className: "hotkey::HotkeyListener",
     filePath: "src-tauri/src/hotkey/mod.rs",
-    glow: "shadow-[0_0_40px_rgba(34,211,238,0.4)] border-cyan-400",
-    iconColor: "text-cyan-400",
-    hex: "#22d3ee"
+    ...CYAN,
   },
   {
     iconName: "cpu" as IconKey,
     className: "orchestrator::TranscriptionCoordinator",
     filePath: "src-tauri/src/orchestrator/coordinator.rs",
-    glow: "shadow-[0_0_40px_rgba(59,130,246,0.4)] border-blue-500",
-    iconColor: "text-blue-500",
-    hex: "#3b82f6"
+    ...CYAN,
   },
   {
     iconName: "mic" as IconKey,
     className: "audio::stream",
     filePath: "src-tauri/src/audio/stream.rs",
-    glow: "shadow-[0_0_40px_rgba(234,179,8,0.4)] border-yellow-500",
-    iconColor: "text-yellow-500",
-    hex: "#eab308"
+    ...CYAN,
   },
   {
     iconName: "brain" as IconKey,
     className: "transcription::TranscriptionClient",
     filePath: "src-tauri/src/transcription/mod.rs",
-    glow: "shadow-[0_0_40px_rgba(168,85,247,0.4)] border-purple-500",
-    iconColor: "text-purple-500",
-    hex: "#a855f7"
+    ...CYAN,
   },
   {
     iconName: "keyboard" as IconKey,
     className: "output::OutputHandler",
     filePath: "src-tauri/src/output/mod.rs",
-    glow: "shadow-[0_0_40px_rgba(52,211,153,0.4)] border-emerald-400",
-    iconColor: "text-emerald-400",
-    hex: "#34d399"
-  }
+    ...CYAN,
+  },
 ];
 
 export const stepsEn: Step[] = layers.map((layer, index) => {
