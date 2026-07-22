@@ -42,8 +42,8 @@ export default function Features({ lang }: { lang: "en" | "ru" }) {
           {t.items.map((it, i) => {
             const Icon = ICONS[it.icon as keyof typeof ICONS];
             return (
-              <div key={i} className="rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.02] p-[var(--space-lg)] hover:border-cyan-400/40 transition-colors duration-300">
-                <div className="p-3 rounded-xl bg-black/50 border border-white/10 text-cyan-400 w-fit mb-[var(--space-md)]">
+              <div key={i} className="rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.02] p-[var(--space-lg)] hover:border-[var(--color-accent)]/40 transition-colors duration-300">
+                <div className="p-3 rounded-xl bg-black/50 border border-white/10 text-[var(--color-accent)] w-fit mb-[var(--space-md)]">
                   <Icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl font-extrabold text-white mb-[var(--space-2xs)]">{it.title}</h3>
