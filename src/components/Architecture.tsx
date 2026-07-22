@@ -78,11 +78,11 @@ function BoardLayer({
         filter: blurValue,
         transformStyle: "preserve-3d",
       }}
-      className={`absolute inset-0 rounded-[40px] border flex items-center justify-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
+      className={`absolute inset-0 rounded-[var(--glass-radius-lg)] border flex items-center justify-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
         ${isActive ? step.glow + " bg-black/95 shadow-[0_30px_60px_rgba(0,0,0,0.8)]" : 'border-white/5 bg-zinc-950/80 shadow-[0_10px_30px_rgba(0,0,0,0.5)]'}
       `}
     >
-      <div className="absolute inset-0 pcb-grid opacity-20 rounded-[40px]"></div>
+      <div className="absolute inset-0 pcb-grid opacity-20 rounded-[var(--glass-radius-lg)]"></div>
 
       <motion.svg 
         className="absolute inset-0 w-full h-full pointer-events-none opacity-60" 
@@ -109,7 +109,7 @@ function BoardLayer({
         <div className="flex items-center gap-8 relative z-10">
           <motion.div className="w-12 h-32 bg-white/5 border border-white/10 rounded-md shadow-inner"></motion.div>
 
-          <div className={`w-56 h-56 border-2 ${isActive ? step.glow : 'border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)]'} bg-[#050505] rounded-3xl flex flex-col items-center justify-center relative transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]`}>
+          <div className={`w-56 h-56 border-2 ${isActive ? step.glow : 'border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)]'} bg-[#050505] rounded-[var(--glass-radius)] flex flex-col items-center justify-center relative transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]`}>
             <div className="absolute top-3 left-3 w-2 h-2 rounded-full bg-zinc-800"></div>
             <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-zinc-800"></div>
             <div className="absolute bottom-3 left-3 w-2 h-2 rounded-full bg-zinc-800"></div>
@@ -183,7 +183,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
                       animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                       exit={{ opacity: 0, x: -30, filter: "blur(10px)" }}
                       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
-                      className={`absolute top-1/2 -translate-y-1/2 w-full bg-black/40 backdrop-blur-3xl rounded-[32px] border border-white/10 ${step.glow.replace('shadow-', 'shadow-2xl shadow-')} overflow-hidden`}
+                      className={`absolute top-1/2 -translate-y-1/2 w-full bg-black/40 backdrop-blur-3xl rounded-[var(--glass-radius-lg)] border border-white/10 ${step.glow.replace('shadow-', 'shadow-2xl shadow-')} overflow-hidden`}
                     >
                       <div className="p-10 relative">
                          <div className="absolute inset-0 pcb-grid opacity-5"></div>
@@ -270,7 +270,7 @@ function BentoStack({ steps, intl }: { steps: Step[]; intl: ArchIntl }) {
       {steps.map((step, i) => {
         const Icon = IconMap[step.iconName];
         return (
-          <div key={i} className={`w-full max-w-lg bg-black/60 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden ${step.glow}`}>
+          <div key={i} className={`w-full max-w-lg bg-black/60 backdrop-blur-xl rounded-[var(--glass-radius)] border border-white/10 shadow-2xl relative overflow-hidden ${step.glow}`}>
             <div className="absolute inset-0 pcb-grid opacity-10"></div>
             <div className="relative z-10 p-6 flex flex-col items-start text-left border-white/5">
               <div className="flex items-center gap-4 mb-4">
