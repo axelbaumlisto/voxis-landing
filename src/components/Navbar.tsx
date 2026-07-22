@@ -1,4 +1,7 @@
-import { Globe, Cpu } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { Globe, Cpu, Menu, X } from "lucide-react";
 import Link from "next/link";
 import Container from "./ui/Container";
 
@@ -8,33 +11,64 @@ interface NavbarProps {
 }
 
 export default function Navbar({ lang, links }: NavbarProps) {
+  const [open, setOpen] = useState(false);
+  const navItems = (
+    <>
+      <a href="#architecture" onClick={() => setOpen(false)} className="hover:text-white transition-colors">{links.architecture}</a>
+      <a href="https://docs.voxis.top" className="hover:text-white transition-colors">{links.docs}</a>
+      <a href="https://github.com/axelbaumlisto/voxis" className="hover:text-white transition-colors">{links.github}</a>
+    </>
+  );
+
+  const langSwitch = (
+    <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full border border-[var(--color-border)] backdrop-blur-md">
+      <Globe className="w-4 h-4 text-[var(--color-muted)]" />
+      {lang === "en" ? (
+        <>
+          <span className="text-white font-bold">EN</span>
+          <span className="text-zinc-600">|</span>
+          <Link href="/ru" className="hover:text-white transition-colors">RU</Link>
+        </>
+      ) : (
+        <>
+          <Link href="/" className="hover:text-white transition-colors">EN</Link>
+          <span className="text-zinc-600">|</span>
+          <span className="text-white font-bold">RU</span>
+        </>
+      )}
+    </div>
+  );
+
   return (
     <Container as="nav" width="page" className="py-[var(--space-md)] flex justify-between items-center absolute top-0 left-1/2 -translate-x-1/2 z-50 backdrop-blur-sm bg-transparent border-b border-[var(--color-border-subtle)]">
       <div className="text-2xl font-black tracking-tighter text-white drop-shadow-lg flex items-center gap-2">
         <Cpu className="w-6 h-6 text-[var(--color-accent)]" /> VOXIS
       </div>
-      <div className="flex items-center gap-6 text-sm text-[var(--color-muted-2)] font-medium">
-        <a href="#architecture" className="hover:text-white transition-colors hidden md:block">{links.architecture}</a>
-        <a href="https://docs.voxis.top" className="hover:text-white transition-colors hidden md:block">{links.docs}</a>
-        <a href="https://github.com/axelbaumlisto/voxis" className="hover:text-white transition-colors hidden md:block">{links.github}</a>
-        
-        <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full border border-[var(--color-border)] ml-4 backdrop-blur-md">
-          <Globe className="w-4 h-4 text-[var(--color-muted)]" />
-          {lang === "en" ? (
-            <>
-              <span className="text-white font-bold">EN</span>
-              <span className="text-zinc-600">|</span>
-              <Link href="/ru" className="hover:text-white transition-colors">RU</Link>
-            </>
-          ) : (
-            <>
-              <Link href="/" className="hover:text-white transition-colors">EN</Link>
-              <span className="text-zinc-600">|</span>
-              <span className="text-white font-bold">RU</span>
-            </>
-          )}
-        </div>
+
+      {/* Desktop */}
+      <div className="hidden md:flex items-center gap-6 text-sm text-[var(--color-muted-2)] font-medium">
+        {navItems}
+        <div className="ml-4">{langSwitch}</div>
       </div>
+
+      {/* Mobile trigger */}
+      <button
+        type="button"
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        className="md:hidden text-white p-2"
+      >
+        {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+      </button>
+
+      {/* Mobile dropdown */}
+      {open && (
+        <div className="md:hidden absolute top-full left-0 right-0 mt-2 mx-4 rounded-2xl border border-white/10 bg-black/90 backdrop-blur-xl p-6 flex flex-col gap-4 text-base text-[var(--color-muted-2)] font-medium shadow-2xl">
+          {navItems}
+          <div className="pt-2">{langSwitch}</div>
+        </div>
+      )}
     </Container>
   );
 }
