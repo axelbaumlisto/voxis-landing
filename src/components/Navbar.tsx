@@ -22,9 +22,9 @@ export default function Navbar({ lang, links }: NavbarProps) {
 
   const navItems = (
     <>
-      <a href="#architecture" onClick={() => setOpen(false)} className="hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.architecture}</a>
-      <a href="https://docs.voxis.top" className="hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.docs}</a>
-      <a href="https://github.com/axelbaumlisto/voxis" className="hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.github}</a>
+      <a href="#architecture" onClick={() => setOpen(false)} className="block py-3 hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.architecture}</a>
+      <a href="https://docs.voxis.top" className="block py-3 hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.docs}</a>
+      <a href="https://github.com/axelbaumlisto/voxis" className="block py-3 hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.github}</a>
     </>
   );
 
@@ -75,7 +75,7 @@ export default function Navbar({ lang, links }: NavbarProps) {
       {open && (
         <div className="md:hidden absolute top-full left-0 right-0 mt-2 mx-4 rounded-2xl border border-white/10 bg-black/90 backdrop-blur-xl p-6 flex flex-col gap-4 text-base text-[var(--color-muted-2)] font-medium shadow-2xl">
           {navItems}
-          <div className="pt-2">{langSwitch}</div>
+          <div className="pt-2 min-h-[44px] flex items-center">{langSwitch}</div>
         </div>
       )}
     </Container>
