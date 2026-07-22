@@ -4,7 +4,7 @@ import Container from "./ui/Container";
 export default function DownloadCta({ lang }: { lang: "en" | "ru" }) {
   const isRu = lang === "ru";
   const t = isRu
-    ? { heading: "Готовы писать со скоростью мысли?", sub: "Бесплатно и с открытым исходным кодом.", dl: "Скачать Voxis", star: "Звезда на GitHub" }
+    ? { heading: "Готовы писать со скоростью мысли?", sub: "Бесплатно и с открытым исходным кодом.", dl: "Скачать Voxis", star: "Поставить звезду" }
     : { heading: "Ready to write at lightspeed?", sub: "Free and open source.", dl: "Download Voxis", star: "Star on GitHub" };
 
   return (

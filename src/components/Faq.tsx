@@ -28,10 +28,13 @@ export default function Faq({ lang }: { lang: "en" | "ru" }) {
         <h2 className="text-[length:var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)] font-extrabold text-white text-center mb-[var(--space-2xl)]">{t.heading}</h2>
         <div className="flex flex-col gap-[var(--space-md)]">
           {t.items.map((it, i) => (
-            <div key={i} className="rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.02] p-[var(--space-lg)]">
-              <h3 className="text-lg font-bold text-white mb-[var(--space-2xs)]">{it.q}</h3>
-              <p className="text-zinc-400 leading-relaxed">{it.a}</p>
-            </div>
+            <details key={i} className="group rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.02] p-[var(--space-lg)] open:border-[var(--color-accent)]/30">
+              <summary className="text-lg font-bold text-white cursor-pointer list-none flex items-center justify-between gap-[var(--space-md)] marker:hidden">
+                <span>{it.q}</span>
+                <span className="text-[var(--color-accent)] text-2xl font-light transition-transform duration-300 ease-out group-open:rotate-45" aria-hidden>+</span>
+              </summary>
+              <p className="text-zinc-400 leading-relaxed mt-[var(--space-sm)]">{it.a}</p>
+            </details>
           ))}
         </div>
       </Container>
