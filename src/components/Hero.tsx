@@ -27,7 +27,7 @@ export default function Hero({ badge, title, description, downloadText, docsText
         };
 
   return (
-    <section className="section-hero flex flex-col items-center justify-center text-center relative z-10 min-h-[68vh] pt-24 pb-16">
+    <section className="section-hero flex flex-col items-center justify-center text-center relative z-10 min-h-[68vh]">
       <LavaLampBg />
       {/* readability scrim: гасит центр blob'а под текстом, края лавы остаются видны */}
       <div

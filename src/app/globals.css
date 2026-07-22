@@ -117,7 +117,7 @@ body {
   .section { padding-block: var(--space-3xl); }
 }
 .section-hero {
-  padding-block: var(--space-4xl);
+  padding-block: var(--space-4xl) var(--space-lg);
   width: 100%;
 }
 
