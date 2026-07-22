@@ -14,6 +14,7 @@ precision highp float;
 uniform vec2  uResolution;
 uniform float uPhase;
 uniform float uLevel;
+uniform float uAA;  // 1.0 desktop (4x supersample), 0.0 mobile (single sample)
 
 uniform float uShine;
 uniform float uSpecW;
@@ -130,6 +131,11 @@ vec4 render(vec2 fragCoord) {
 }
 
 void main() {
+  if (uAA < 0.5) {
+    // Mobile: single sample (no supersample, no MSAA feather cost).
+    gl_FragColor = render(gl_FragCoord.xy);
+    return;
+  }
   vec3  rgbAcc = vec3(0.0);
   float aAcc   = 0.0;
   vec4 s;
@@ -207,6 +213,12 @@ export default function LavaLampBg() {
     gl.uniform1f(gl.getUniformLocation(prog, "uSpecW"), 0.6);
     gl.uniform1f(gl.getUniformLocation(prog, "uSaturation"), 1.7);
     gl.uniform1f(gl.getUniformLocation(prog, "uZoom"), 1.7);
+    // Perf gate: mobile viewport ⇒ single-sample + DPR clamped to 1.
+    // Cuts fragment work by 4×; visible drop in AA is acceptable at small screens.
+    const isMobile =
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 767px)").matches;
+    gl.uniform1f(gl.getUniformLocation(prog, "uAA"), isMobile ? 0.0 : 1.0);
     // Brand-aligned cool palette: cyan → blue → purple → teal
     // (matches --color-accent: #22d3ee and Architecture stage-1 hue)
     gl.uniform3f(gl.getUniformLocation(prog, "uCol1"), 0.13, 0.827, 0.933); // #22d3ee cyan
@@ -220,7 +232,7 @@ export default function LavaLampBg() {
     let running = true;
 
     function resize() {
-      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const dpr = isMobile ? 1 : Math.min(2, window.devicePixelRatio || 1);
       const w = Math.floor(canvas!.clientWidth * dpr);
       const h = Math.floor(canvas!.clientHeight * dpr);
       if (canvas!.width !== w || canvas!.height !== h) {
