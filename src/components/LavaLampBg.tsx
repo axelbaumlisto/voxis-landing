@@ -215,10 +215,9 @@ export default function LavaLampBg() {
     gl.uniform1f(gl.getUniformLocation(prog, "uZoom"), 1.7);
     // Perf gate: mobile viewport ⇒ single-sample + DPR clamped to 1.
     // Cuts fragment work by 4×; visible drop in AA is acceptable at small screens.
-    const isMobile =
-      typeof window !== "undefined" &&
-      window.matchMedia("(max-width: 767px)").matches;
-    gl.uniform1f(gl.getUniformLocation(prog, "uAA"), isMobile ? 0.0 : 1.0);
+    // uAA is set inside resize() so it re-evaluates when the viewport crosses
+    // the 768px breakpoint (rotate/resize) without needing a page reload.
+    const uAA = gl.getUniformLocation(prog, "uAA");
     // Brand-aligned cool palette: cyan → blue → purple → teal
     // (matches --color-accent: #22d3ee and Architecture stage-1 hue)
     gl.uniform3f(gl.getUniformLocation(prog, "uCol1"), 0.13, 0.827, 0.933); // #22d3ee cyan
@@ -232,9 +231,13 @@ export default function LavaLampBg() {
     let running = true;
 
     function resize() {
-      const dpr = isMobile ? 1 : Math.min(2, window.devicePixelRatio || 1);
+      const isMobileNow =
+        typeof window !== "undefined" &&
+        window.matchMedia("(max-width: 767px)").matches;
+      const dpr = isMobileNow ? 1 : Math.min(2, window.devicePixelRatio || 1);
       const w = Math.floor(canvas!.clientWidth * dpr);
       const h = Math.floor(canvas!.clientHeight * dpr);
+      gl!.uniform1f(uAA, isMobileNow ? 0.0 : 1.0);
       if (canvas!.width !== w || canvas!.height !== h) {
         canvas!.width = w;
         canvas!.height = h;
