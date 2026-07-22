@@ -46,3 +46,11 @@ vercel_*.log
 # worker scratch
 .tmp-*.md
 .pi-subagents/
+
+# agent scratch
+.tmp-reviews*
+screenshot.js
+probe.mjs
+shot*.mjs
+capture*.mjs
+capture*.js
