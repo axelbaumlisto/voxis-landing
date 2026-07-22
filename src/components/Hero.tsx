@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Download, BookOpen } from "lucide-react";
 import Container from "./ui/Container";
 import LavaLampBg from "./LavaLampBg";
+import { DUR, EASE_OUT_EXPO } from "../lib/motion";
 
 interface HeroProps {
   badge: string;
@@ -23,7 +24,7 @@ export default function Hero({ badge, title, description, downloadText, docsText
       : {
           initial: { y: 24, opacity: 0.001 },
           animate: { y: 0, opacity: 1 },
-          transition: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] as const },
+          transition: { duration: DUR.slow, delay, ease: EASE_OUT_EXPO },
         };
 
   return (

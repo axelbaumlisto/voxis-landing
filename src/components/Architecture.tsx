@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence, 
 import { Mic, Zap, Brain, Keyboard, Terminal, Cpu } from "lucide-react";
 import type { Step, IconKey } from "../data/architecture";
 import { useMediaQuery } from "../hooks/useMediaQuery";
+import { DUR, EASE_OUT_EXPO } from "../lib/motion";
 
 export interface ArchIntl {
   title: string;
@@ -184,7 +185,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
                       initial={{ opacity: 0, x: -30, filter: "blur(10px)" }}
                       animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                       exit={{ opacity: 0, x: -30, filter: "blur(10px)" }}
-                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
+                      transition={{ duration: DUR.base, ease: EASE_OUT_EXPO }}
                       className={`absolute top-1/2 -translate-y-1/2 w-full bg-black/40 backdrop-blur-3xl rounded-[var(--glass-radius-lg)] border border-white/10 ${step.glow.replace('shadow-', 'shadow-2xl shadow-')} overflow-hidden`}
                     >
                       <div className="p-10 relative">
