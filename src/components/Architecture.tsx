@@ -209,8 +209,8 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
                              {step.desc}
                            </p>
                            
-                           <div className={`w-full p-4 rounded-xl bg-[#0d1117]/80 border border-white/5 font-mono text-sm shadow-inner ${step.iconColor} flex flex-col md:flex-row md:items-center justify-between gap-2 overflow-hidden`}>
-                             <span className="truncate" title={step.className}>{step.className}</span>
+                           <div className={`w-full p-4 rounded-xl bg-[#0d1117]/80 border border-white/5 font-mono text-sm shadow-inner ${step.iconColor} flex flex-col gap-1 overflow-hidden`}>
+                             <span className="truncate min-w-0" title={step.className}>{step.className}</span>
                              <span className="text-zinc-600 text-xs shrink-0" title={step.filePath}>
                                {step.filePath.split("/").pop()}
                              </span>
