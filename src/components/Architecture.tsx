@@ -79,7 +79,7 @@ function BoardLayer({
         filter: blurValue,
         transformStyle: "preserve-3d",
       }}
-      className={`absolute inset-0 rounded-[var(--glass-radius-lg)] border flex items-center justify-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
+      className={`absolute inset-0 rounded-[var(--glass-radius-lg)] border flex items-center justify-center transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-expo)]
         ${isActive ? step.glow + " bg-black/95 shadow-[0_30px_60px_rgba(0,0,0,0.8)]" : 'border-white/5 bg-zinc-950/80 shadow-[0_10px_30px_rgba(0,0,0,0.5)]'}
       `}
     >
@@ -110,7 +110,7 @@ function BoardLayer({
         <div className="flex items-center gap-8 relative z-10">
           <motion.div className="w-12 h-32 bg-white/5 border border-white/10 rounded-md shadow-inner"></motion.div>
 
-          <div className={`w-56 h-56 border-2 ${isActive ? step.glow : 'border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)]'} bg-[#050505] rounded-[var(--glass-radius)] flex flex-col items-center justify-center relative transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]`}>
+          <div className={`w-56 h-56 border-2 ${isActive ? step.glow : 'border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)]'} bg-[#050505] rounded-[var(--glass-radius)] flex flex-col items-center justify-center relative transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-expo)]`}>
             <div className="absolute top-3 left-3 w-2 h-2 rounded-full bg-zinc-800"></div>
             <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-zinc-800"></div>
             <div className="absolute bottom-3 left-3 w-2 h-2 rounded-full bg-zinc-800"></div>
