@@ -12,6 +12,13 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Agent scratch / temporary scripts:
+    ".tmp-*/**",
+    "screenshot.js",
+    "probe*.mjs",
+    "shot*.mjs",
+    "capture*.mjs",
+    "capture*.js",
   ]),
 ]);
 
