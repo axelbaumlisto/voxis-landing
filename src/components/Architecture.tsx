@@ -111,10 +111,9 @@ function BoardLayer({
           <motion.div className="w-12 h-32 bg-white/5 border border-white/10 rounded-md shadow-inner"></motion.div>
 
           <div className={`w-56 h-56 border-2 ${isActive ? step.glow : 'border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)]'} bg-[var(--color-surface-2)] rounded-[var(--glass-radius)] flex flex-col items-center justify-center relative transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-expo)]`}>
-            <div className="absolute top-3 left-3 w-2 h-2 rounded-full bg-zinc-800"></div>
-            <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-zinc-800"></div>
-            <div className="absolute bottom-3 left-3 w-2 h-2 rounded-full bg-zinc-800"></div>
-            <div className="absolute bottom-3 right-3 w-2 h-2 rounded-full bg-zinc-800"></div>
+            {["top-3 left-3", "top-3 right-3", "bottom-3 left-3", "bottom-3 right-3"].map((pos) => (
+              <div key={pos} className={`absolute ${pos} w-2 h-2 rounded-full bg-zinc-800`} aria-hidden="true" />
+            ))}
             
             <div className={`p-4 rounded-2xl bg-black border border-white/10 mb-4 shadow-inner ${step.iconColor}`}>
               {Icon && <Icon className="w-12 h-12" />}
