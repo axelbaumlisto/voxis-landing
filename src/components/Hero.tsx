@@ -42,7 +42,11 @@ export default function Hero({ badge, title, description, downloadText, docsText
 
       <Container width="prose" className="relative z-[1] flex flex-col items-center">
         <motion.div {...rise(0)} className="badge mb-[var(--space-lg)]">
-          <span className="badge-dot animate-pulse" />
+          <motion.span
+            className="badge-dot"
+            animate={reduce ? {} : { opacity: [0.6, 1, 0.6] }}
+            transition={reduce ? {} : { duration: 2.4, repeat: Infinity, ease: [0.4, 0, 0.2, 1] }}
+          />
           {badge}
         </motion.div>
 

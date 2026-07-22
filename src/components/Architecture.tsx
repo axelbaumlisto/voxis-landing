@@ -206,7 +206,9 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
                            
                            <div className={`w-full p-4 rounded-xl bg-[#0d1117]/80 border border-white/5 font-mono text-sm shadow-inner ${step.iconColor} flex flex-col md:flex-row md:items-center justify-between gap-2 overflow-hidden`}>
                              <span className="truncate" title={step.className}>{step.className}</span>
-                             <span className="text-zinc-600 text-xs shrink-0">.rs</span>
+                             <span className="text-zinc-600 text-xs shrink-0" title={step.filePath}>
+                               {step.filePath.split("/").pop()}
+                             </span>
                            </div>
                          </div>
                       </div>
@@ -272,14 +274,20 @@ function BentoStack({ steps, intl }: { steps: Step[]; intl: ArchIntl }) {
                 <div className={`p-3 rounded-xl bg-black/50 border border-white/10 ${step.iconColor}`}>
                   {Icon && <Icon className="w-6 h-6" />}
                 </div>
-                <div>
+                <div className="min-w-0">
                   <div className="text-[10px] font-mono font-bold tracking-widest uppercase" style={{ color: step.hex }}>
-                    {step.className}
+                    {step.subtitle}
                   </div>
                   <h3 className="text-xl font-extrabold text-white">{step.title}</h3>
                 </div>
               </div>
               <p className="text-zinc-300 text-sm leading-relaxed font-light mb-4">{step.desc}</p>
+              <div className={`w-full mt-auto p-3 rounded-xl bg-[#0d1117]/80 border border-white/5 font-mono text-xs shadow-inner ${step.iconColor} flex items-center justify-between gap-2 overflow-hidden`}>
+                <span className="truncate" title={step.className}>{step.className}</span>
+                <span className="text-zinc-600 shrink-0 text-[10px]">
+                  {step.filePath.split("/").pop()}
+                </span>
+              </div>
             </div>
           </div>
         );
