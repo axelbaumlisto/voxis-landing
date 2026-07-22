@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Globe, Cpu, Menu, X } from "lucide-react";
 import Link from "next/link";
 import Container from "./ui/Container";
@@ -12,6 +12,14 @@ interface NavbarProps {
 
 export default function Navbar({ lang, links }: NavbarProps) {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const navItems = (
     <>
       <a href="#architecture" onClick={() => setOpen(false)} className="hover:text-white transition-colors duration-200 ease-out">{links.architecture}</a>
@@ -40,7 +48,7 @@ export default function Navbar({ lang, links }: NavbarProps) {
   );
 
   return (
-    <Container as="nav" width="page" className="py-[var(--space-md)] flex justify-between items-center absolute top-0 left-1/2 -translate-x-1/2 z-50 backdrop-blur-sm bg-transparent border-b border-[var(--color-border-subtle)]">
+    <Container as="nav" width="page" className={`py-[var(--space-md)] flex justify-between items-center fixed top-0 left-1/2 -translate-x-1/2 z-50 transition-colors duration-300 ease-out ${scrolled ? "backdrop-blur-md bg-black/60 border-b border-[var(--color-border-subtle)]" : "bg-transparent border-b border-transparent"}`}>
       <div className="text-2xl font-black tracking-tighter text-white drop-shadow-lg flex items-center gap-2">
         <Cpu className="w-6 h-6 text-[var(--color-accent)]" /> VOXIS
       </div>
