@@ -196,7 +196,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
                                 {IconMap[step.iconName] && (() => { const I = IconMap[step.iconName]; return <I className="w-8 h-8" /> })()}
                               </div>
                               <div>
-                                <div className="text-xs font-mono font-bold tracking-widest uppercase mb-1" style={{ color: step.hex }}>
+                                <div className="text-xs font-mono font-bold tracking-widest uppercase mb-2" style={{ color: step.hex }}>
                                   {step.subtitle}
                                 </div>
                                 <h3 className="text-[length:var(--text-h2)] leading-[var(--text-h2--line-height)] font-extrabold text-white">
@@ -205,7 +205,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
                               </div>
                            </div>
                            
-                           <p className="text-zinc-300 text-lg leading-relaxed font-light mb-6">
+                           <p className="text-zinc-300 text-lg leading-relaxed font-light mb-[var(--space-md)]">
                              {step.desc}
                            </p>
                            
