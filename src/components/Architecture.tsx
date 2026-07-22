@@ -60,7 +60,7 @@ function BoardLayer({
   const opacity = useTransform(
     currentZ,
     [-3200, -1600, -700, 0, 180, 420],
-    [0.04,   0.22,  0.6, 1, 0.12, 0],
+    [0.08,   0.28,  0.65, 1, 0.18, 0.06],
     { clamp: true }
   );
 
@@ -151,7 +151,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
   });
 
   return (
-    <section id="architecture" ref={containerRef} className={`relative w-full bg-black ${reduce ? "" : "md:h-[320vh]"}`}>
+    <section id="architecture" ref={containerRef} className={`relative w-full bg-black ${reduce ? "" : "md:h-[240vh]"}`}>
       {/* MOBILE + reduced-motion fallback: always-visible bento stack */}
       <div className={reduce ? "block" : "md:hidden"}>
         <BentoStack steps={steps} intl={intl} />
