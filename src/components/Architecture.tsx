@@ -159,9 +159,9 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
 
       {/* DESKTOP 3D fly-through (skipped for reduced-motion) */}
       {isDesktop && !reduce && (
-        <div className="hidden md:flex sticky top-0 h-screen w-full flex-row items-center justify-center overflow-hidden px-10 lg:px-20 bg-gradient-to-b from-[#050505] to-[#0a0a0a]">
-          {/* Section heading — sticky anchor for #architecture */}
-          <div className="absolute top-12 left-1/2 -translate-x-1/2 text-center z-40 pointer-events-none">
+        <div className="hidden md:flex sticky top-0 h-screen w-full flex-col overflow-hidden px-10 lg:px-20 bg-gradient-to-b from-[#050505] to-[#0a0a0a]">
+          {/* Section heading — in-flow at top so the 3D content starts directly beneath it */}
+          <div className="pt-[var(--space-2xl)] pb-[var(--space-md)] text-center z-40 pointer-events-none shrink-0">
             <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white">
               {intl.title}
             </h2>
@@ -170,6 +170,8 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
             </p>
           </div>
 
+          {/* 3D row fills the space right under the heading */}
+          <div className="flex-1 flex flex-row items-center justify-center w-full min-h-0">
           {/* Left Side: Info Glass */}
           <div className="w-1/2 flex flex-col items-center justify-center z-30 h-full relative">
             <div className="w-full max-w-lg relative">
@@ -241,6 +243,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
                 />
               ))}
             </motion.div>
+          </div>
           </div>
 
           {/* Progress stepper — active step out of total, pinned bottom */}
