@@ -23,7 +23,7 @@ export default function Hero({ badge, title, description, downloadText, docsText
       : {
           initial: { y: 24, opacity: 0.001 },
           animate: { y: 0, opacity: 1 },
-          transition: { duration: 0.8, delay, ease: "easeOut" as const },
+          transition: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] as const },
         };
 
   return (

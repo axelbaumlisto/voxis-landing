@@ -91,6 +91,14 @@
   --glass-blur-strong: 24px;
   --glass-blur-max:    40px;
   --code-fill: rgba(13, 17, 23, 0.80);
+
+  /* ── Motion system ── */
+  --dur-fast: 200ms;
+  --dur-base: 300ms;
+  --dur-slow: 600ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-linear-style: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 body {
@@ -184,7 +192,10 @@ body {
   border-radius: 9999px;
   font-weight: 700;
   line-height: 1;
-  transition: transform .2s ease, background-color .2s ease, box-shadow .2s ease;
+  transition:
+    transform var(--dur-fast) var(--ease-linear-style),
+    background-color var(--dur-fast) var(--ease-linear-style),
+    box-shadow var(--dur-fast) var(--ease-linear-style);
   cursor: pointer;
 }
 @utility btn-primary {
@@ -199,8 +210,8 @@ body {
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
 }
-.btn-primary:hover  { background-color: #e4e4e7; transform: scale(1.05); }
-.btn-primary:active { transform: scale(0.95); }
+.btn-primary:hover  { background-color: #e4e4e7; transform: scale(1.02); }
+.btn-primary:active { transform: scale(0.98); }
 .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.12); }
 
 @utility badge {

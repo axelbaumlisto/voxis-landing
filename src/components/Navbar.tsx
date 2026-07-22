@@ -14,9 +14,9 @@ export default function Navbar({ lang, links }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const navItems = (
     <>
-      <a href="#architecture" onClick={() => setOpen(false)} className="hover:text-white transition-colors">{links.architecture}</a>
-      <a href="https://docs.voxis.top" className="hover:text-white transition-colors">{links.docs}</a>
-      <a href="https://github.com/axelbaumlisto/voxis" className="hover:text-white transition-colors">{links.github}</a>
+      <a href="#architecture" onClick={() => setOpen(false)} className="hover:text-white transition-colors duration-200 ease-out">{links.architecture}</a>
+      <a href="https://docs.voxis.top" className="hover:text-white transition-colors duration-200 ease-out">{links.docs}</a>
+      <a href="https://github.com/axelbaumlisto/voxis" className="hover:text-white transition-colors duration-200 ease-out">{links.github}</a>
     </>
   );
 
