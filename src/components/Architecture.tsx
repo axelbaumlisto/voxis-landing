@@ -252,7 +252,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
             {steps.map((_, i) => (
               <span
                 key={i}
-                className={`h-1 rounded-full transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                className={`h-1 rounded-full transition-[width,background-color] duration-300 ease-[var(--ease-out-expo)] ${
                   i === active ? "w-10 bg-white" : "w-4 bg-white/20"
                 }`}
               />
