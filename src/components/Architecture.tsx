@@ -178,8 +178,10 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
             <div className="w-full max-w-lg relative">
               
               <AnimatePresence mode="popLayout" initial={false}>
-                {steps.map((step, i) => (
-                  i === active && (
+                {steps.map((step, i) => {
+                  const Icon = IconMap[step.iconName];
+
+                  return i === active && (
                     <motion.div
                       key={i}
                       initial={{ opacity: 0, x: -30, filter: "blur(10px)" }}
@@ -193,7 +195,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
                          <div className="relative z-10">
                            <div className="flex items-center gap-4 mb-6">
                               <div className={`p-4 rounded-2xl bg-black/80 border border-white/10 shadow-inner ${step.iconColor}`}>
-                                {IconMap[step.iconName] && (() => { const I = IconMap[step.iconName]; return <I className="w-8 h-8" /> })()}
+                                {Icon && <Icon className="w-8 h-8" />}
                               </div>
                               <div>
                                 <div className="text-xs font-mono font-bold tracking-widest uppercase mb-2" style={{ color: step.hex }}>
@@ -218,8 +220,8 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
                          </div>
                       </div>
                     </motion.div>
-                  )
-                ))}
+                  );
+                })}
               </AnimatePresence>
             </div>
           </div>
