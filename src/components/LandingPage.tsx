@@ -3,6 +3,10 @@
 import Navbar from "./Navbar";
 import Hero from "./Hero";
 import Architecture from "./Architecture";
+import Features from "./Features";
+import Showcase from "./Showcase";
+import DownloadCta from "./DownloadCta";
+import Faq from "./Faq";
 import Footer from "./Footer";
 import { stepsEn, stepsRu } from "../data/architecture";
 
@@ -39,6 +43,10 @@ export default function LandingPage({ lang }: { lang: "en" | "ru" }) {
       <Navbar lang={lang} links={navLinks} />
       <Hero {...heroProps} />
       <Architecture steps={isRu ? stepsRu : stepsEn} intl={archIntl} />
+      <Features lang={lang} />
+      <Showcase lang={lang} />
+      <DownloadCta lang={lang} />
+      <Faq lang={lang} />
       <Footer lang={lang} />
     </main>
   );
