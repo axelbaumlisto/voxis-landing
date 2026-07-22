@@ -1,5 +1,6 @@
 "use client";
 
+import { MotionConfig } from "framer-motion";
 import Navbar from "./Navbar";
 import Hero from "./Hero";
 import Architecture from "./Architecture";
@@ -39,15 +40,17 @@ export default function LandingPage({ lang }: { lang: "en" | "ru" }) {
     : { title: "System Architecture", subtitle: "SOLID Rust Architecture" };
 
   return (
-    <main className="min-h-screen relative flex flex-col items-center bg-black w-full">
-      <Navbar lang={lang} links={navLinks} />
-      <Hero {...heroProps} />
-      <Architecture steps={isRu ? stepsRu : stepsEn} intl={archIntl} />
-      <Features lang={lang} />
-      <Showcase lang={lang} />
-      <DownloadCta lang={lang} />
-      <Faq lang={lang} />
-      <Footer lang={lang} />
-    </main>
+    <MotionConfig reducedMotion="user">
+      <main className="min-h-screen relative flex flex-col items-center bg-black w-full">
+        <Navbar lang={lang} links={navLinks} />
+        <Hero {...heroProps} />
+        <Architecture steps={isRu ? stepsRu : stepsEn} intl={archIntl} />
+        <Features lang={lang} />
+        <Showcase lang={lang} />
+        <DownloadCta lang={lang} />
+        <Faq lang={lang} />
+        <Footer lang={lang} />
+      </main>
+    </MotionConfig>
   );
 }

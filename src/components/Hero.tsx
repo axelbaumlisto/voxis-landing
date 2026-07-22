@@ -20,7 +20,7 @@ export default function Hero({ badge, title, description, downloadText, docsText
   // Progressive enhancement: text is always painted (opacity:1). Only translate for the slide-up.
   const rise = (delay: number) =>
     reduce
-      ? {}
+      ? { initial: false as const, animate: { opacity: 1, y: 0 } }
       : {
           initial: { y: 24, opacity: 0.001 },
           animate: { y: 0, opacity: 1 },
