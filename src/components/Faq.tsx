@@ -23,7 +23,7 @@ export default function Faq({ lang }: { lang: "en" | "ru" }) {
       };
 
   return (
-    <section className="w-full bg-black py-[var(--space-4xl)] relative z-10 border-t border-white/5">
+    <section className="section bg-black relative z-10 border-t border-white/5">
       <Container width="content">
         <h2 className="text-[length:var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)] font-extrabold text-white text-center mb-[var(--space-2xl)]">{t.heading}</h2>
         <div className="flex flex-col gap-[var(--space-md)]">
