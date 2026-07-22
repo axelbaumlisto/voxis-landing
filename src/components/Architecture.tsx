@@ -209,9 +209,9 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
                              {step.desc}
                            </p>
                            
-                           <div className={`w-full p-4 rounded-xl bg-[#0d1117]/80 border border-white/5 font-mono text-sm shadow-inner ${step.iconColor} flex flex-col gap-1 overflow-hidden`}>
-                             <span className="truncate min-w-0" title={step.className}>{step.className}</span>
-                             <span className="text-zinc-600 text-xs shrink-0" title={step.filePath}>
+                           <div className={`pill-code w-full ${step.iconColor}`}>
+                             <span className="pill-code__type" title={step.className}>{step.className}</span>
+                             <span className="pill-code__path" title={step.filePath}>
                                {step.filePath.split("/").pop()}
                              </span>
                            </div>
@@ -289,9 +289,9 @@ function BentoStack({ steps, intl }: { steps: Step[]; intl: ArchIntl }) {
                 </div>
               </div>
               <p className="text-zinc-300 text-sm leading-relaxed font-light mb-4">{step.desc}</p>
-              <div className={`w-full mt-auto p-3 rounded-xl bg-[#0d1117]/80 border border-white/5 font-mono text-xs shadow-inner ${step.iconColor} flex items-center justify-between gap-2 overflow-hidden`}>
-                <span className="truncate" title={step.className}>{step.className}</span>
-                <span className="text-zinc-600 shrink-0 text-[10px]">
+              <div className={`pill-code w-full mt-auto ${step.iconColor}`}>
+                <span className="pill-code__type" title={step.className}>{step.className}</span>
+                <span className="pill-code__path" title={step.filePath}>
                   {step.filePath.split("/").pop()}
                 </span>
               </div>
