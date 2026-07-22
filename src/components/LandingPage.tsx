@@ -31,22 +31,8 @@ export default function LandingPage({ lang }: { lang: "en" | "ru" }) {
       };
 
   const archIntl = isRu
-    ? {
-        eyebrow: "ПОД КАПОТОМ",
-        title: "Архитектура системы",
-        intro:
-          "Монолитное ядро на Rust оркестрирует события ОС, аудиопотоки и облачный инференс.",
-        scrollHint: "Прокрути вниз, чтобы «взорвать» чип и пролететь сквозь слои.",
-        subtitle: "SOLID-архитектура на Rust",
-      }
-    : {
-        eyebrow: "UNDER THE HOOD",
-        title: "System Architecture",
-        intro:
-          "A monolithic Rust core orchestrating OS events, audio streams, and cloud inference.",
-        scrollHint: "Scroll down to explode the chip and fly through the layers.",
-        subtitle: "SOLID Rust Architecture",
-      };
+    ? { title: "Архитектура системы", subtitle: "SOLID-архитектура на Rust" }
+    : { title: "System Architecture", subtitle: "SOLID Rust Architecture" };
 
   return (
     <main className="min-h-screen relative flex flex-col items-center bg-black w-full">

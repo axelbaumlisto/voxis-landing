@@ -26,7 +26,7 @@ export default function Hero({ badge, title, description, downloadText, docsText
         };
 
   return (
-    <section className="section-hero flex flex-col items-center justify-center text-center relative z-10 min-h-screen">
+    <section className="section-hero flex flex-col items-center justify-center text-center relative z-10 min-h-[68vh] pt-24 pb-16">
       <div className="absolute inset-0 bg-grid opacity-30 z-[-1]"></div>
       <div className="absolute top-[30%] left-1/2 -translate-x-1/2 w-[60vw] h-[40vw] bg-[var(--color-accent-blue)]/15 rounded-full mix-blend-screen blur-[150px] z-[-1]"></div>
 

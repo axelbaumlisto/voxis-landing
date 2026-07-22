@@ -7,10 +7,7 @@ import type { Step, IconKey } from "../data/architecture";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 
 export interface ArchIntl {
-  eyebrow: string;
   title: string;
-  intro: string;
-  scrollHint: string;
   subtitle: string;
 }
 
@@ -48,27 +45,14 @@ function BoardLayer({
   const isActive = i === active;
 
   const currentZ = useTransform(scrollYProgress, (p) => {
-    // START COMPACTED: spread = 40 (tightly stacked like a real chip)
-    // EXPLODE: expand to 620 over the first 10% of scroll
-    let spread = 40; 
-    let fly = 0;
-    
-    if (p < 0.1) {
-      spread = 40 + (p / 0.1) * (SPREAD - 40);
-    } else {
-      spread = SPREAD;
-      fly = ((p - 0.1) / 0.9) * 4.99; 
-    }
-
+    // Peek from frame one: all 5 layers already spread. Scroll moves focus (fly),
+    // not "explode from compacted chip". No global camera offset — the stack is
+    // pre-arranged for hero-peek visibility.
+    const fly = p * 4.99;
     const distance = i - fly;
-    const baseDepth = distance * -spread;
-
+    const baseDepth = distance * -SPREAD;
     const pop = Math.abs(distance) < EPSILON ? FOCUS_POP * (1 - Math.abs(distance) / EPSILON) : 0;
-    
-    // When compacted (p < 0.05), push the whole stack closer to the camera so it's readable
-    const globalOffset = p < 0.05 ? 300 : 0;
-    
-    return baseDepth + pop + globalOffset;
+    return baseDepth + pop;
   });
 
   const opacity = useTransform(
@@ -83,8 +67,6 @@ function BoardLayer({
     [-2000, -500, 0, 200, 500],
     ["blur(12px)", "blur(4px)", "blur(0px)", "blur(0px)", "blur(8px)"]
   );
-
-  const isIntro = useTransform(scrollYProgress, (p) => p < 0.05);
 
   return (
     <motion.div
@@ -103,7 +85,6 @@ function BoardLayer({
       <motion.svg 
         className="absolute inset-0 w-full h-full pointer-events-none opacity-60" 
         viewBox="0 0 500 500"
-        style={{ opacity: isIntro.get() ? 0.1 : 0.6 }} // Fade traces when compacted
       >
         <defs>
           <marker id={`arrow-${i}`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
@@ -119,12 +100,12 @@ function BoardLayer({
       </motion.svg>
 
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <motion.div style={{ opacity: isIntro.get() ? 0 : 1 }} className="w-32 h-8 bg-white/5 border border-white/10 rounded-md flex items-center justify-center text-[10px] font-mono text-zinc-500 mb-8 shadow-inner">
+        <motion.div className="w-32 h-8 bg-white/5 border border-white/10 rounded-md flex items-center justify-center text-[10px] font-mono text-zinc-500 mb-8 shadow-inner">
           Input I/O
         </motion.div>
 
         <div className="flex items-center gap-8 relative z-10">
-          <motion.div style={{ opacity: isIntro.get() ? 0 : 1 }} className="w-12 h-32 bg-white/5 border border-white/10 rounded-md shadow-inner"></motion.div>
+          <motion.div className="w-12 h-32 bg-white/5 border border-white/10 rounded-md shadow-inner"></motion.div>
 
           <div className={`w-56 h-56 border-2 ${isActive ? step.glow : 'border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)]'} bg-[#050505] rounded-3xl flex flex-col items-center justify-center relative transition-all duration-300`}>
             <div className="absolute top-3 left-3 w-2 h-2 rounded-full bg-zinc-800"></div>
@@ -135,15 +116,15 @@ function BoardLayer({
             <div className={`p-4 rounded-2xl bg-black border border-white/10 mb-4 shadow-inner ${step.iconColor}`}>
               {Icon && <Icon className="w-12 h-12" />}
             </div>
-            <motion.div style={{ opacity: isIntro.get() ? 0 : 1 }} className="text-xs font-mono text-white tracking-widest text-center px-4">
+            <motion.div className="text-xs font-mono text-white tracking-widest text-center px-4">
               {step.className}
             </motion.div>
           </div>
 
-          <motion.div style={{ opacity: isIntro.get() ? 0 : 1 }} className="w-12 h-32 bg-white/5 border border-white/10 rounded-md shadow-inner"></motion.div>
+          <motion.div className="w-12 h-32 bg-white/5 border border-white/10 rounded-md shadow-inner"></motion.div>
         </div>
 
-        <motion.div style={{ opacity: isIntro.get() ? 0 : 1 }} className="w-32 h-8 bg-white/5 border border-white/10 rounded-md flex items-center justify-center text-[10px] font-mono text-zinc-500 mt-8 shadow-inner">
+        <motion.div className="w-32 h-8 bg-white/5 border border-white/10 rounded-md flex items-center justify-center text-[10px] font-mono text-zinc-500 mt-8 shadow-inner">
           Output I/O
         </motion.div>
       </div>
@@ -154,7 +135,6 @@ function BoardLayer({
 export default function Architecture({ steps, intl }: ArchitectureProps) {
   const containerRef = useRef(null);
   const [active, setActive] = useState(0);
-  const [showLayers, setShowLayers] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const reduce = useReducedMotion();
 
@@ -164,17 +144,9 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    setShowLayers(latest >= 0.05);
-    let f = 0;
-    if (latest >= 0.1) {
-      f = ((latest - 0.1) / 0.9) * 4.99;
-    }
+    const f = latest * 4.99;
     setActive(Math.min(steps.length - 1, Math.max(0, Math.floor(f))));
   });
-
-  const introOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
-  const introY = useTransform(scrollYProgress, [0, 0.05], [0, -30]);
-  const introPointer = useTransform(scrollYProgress, [0, 0.05], ["auto", "none"]);
 
   return (
     <section id="architecture" ref={containerRef} className={`relative w-full bg-black ${reduce ? "" : "md:h-[320vh]"}`}>
@@ -191,34 +163,8 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
           <div className="w-1/2 flex flex-col items-center justify-center z-30 h-full relative">
             <div className="w-full max-w-lg relative">
               
-              {/* Intro Card (only while not yet exploded) */}
-              {!showLayers && (
-                <motion.div
-                  style={{ opacity: introOpacity, y: introY, pointerEvents: introPointer as unknown as React.CSSProperties["pointerEvents"] }}
-                  className="absolute top-1/2 -translate-y-1/2 w-full z-40 bg-black/60 backdrop-blur-3xl rounded-[32px] border border-white/20 shadow-2xl shadow-emerald-500/20 overflow-hidden"
-                >
-                  <div className="p-10 relative">
-                     <div className="absolute inset-0 pcb-grid opacity-10"></div>
-                     <div className="relative z-10">
-                       <div className="text-xs font-mono font-bold tracking-widest uppercase mb-1 text-emerald-400">
-                         {intl.eyebrow}
-                       </div>
-                       <h3 className="text-4xl font-extrabold text-white mb-6">
-                         {intl.title}
-                       </h3>
-                       <p className="text-zinc-300 text-lg leading-relaxed font-light mb-6">
-                         {intl.intro}
-                         <br/><br/>
-                         {intl.scrollHint}
-                       </p>
-                     </div>
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Layer Cards (5% - 100% scroll) */}
               <AnimatePresence mode="wait">
-                {showLayers && steps.map((step, i) => (
+                {steps.map((step, i) => (
                   i === active && (
                     <motion.div
                       key={i}
