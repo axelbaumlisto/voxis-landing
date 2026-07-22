@@ -36,7 +36,7 @@ export default function Hero({ badge, title, description, downloadText, docsText
         style={{
           zIndex: 0,
           background:
-            "radial-gradient(60% 55% at 50% 50%, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.4) 55%, transparent 100%)",
+            "radial-gradient(60% 55% at 50% 50%, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.32) 55%, transparent 100%)",
         }}
       />
 
