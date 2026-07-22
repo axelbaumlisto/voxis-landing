@@ -278,7 +278,7 @@ function BentoStack({ steps, intl }: { steps: Step[]; intl: ArchIntl }) {
         return (
           <div key={i} className={`w-full max-w-lg bg-black/60 backdrop-blur-xl rounded-[var(--glass-radius)] border border-white/10 shadow-2xl relative overflow-hidden ${step.glow}`}>
             <div className="absolute inset-0 pcb-grid opacity-10"></div>
-            <div className="relative z-10 p-6 flex flex-col items-start text-left border-white/5">
+            <div className="relative z-10 p-6 flex flex-col items-start text-left">
               <div className="flex items-center gap-4 mb-4">
                 <div className={`p-3 rounded-xl bg-black/50 border border-white/10 ${step.iconColor}`}>
                   {Icon && <Icon className="w-6 h-6" />}
