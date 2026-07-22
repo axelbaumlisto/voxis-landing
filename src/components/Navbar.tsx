@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Globe, Cpu, Menu, X } from "lucide-react";
 import Link from "next/link";
 import Container from "./ui/Container";
@@ -13,12 +13,34 @@ interface NavbarProps {
 export default function Navbar({ lang, links }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (triggerRef.current?.contains(target)) return;
+      if (menuRef.current && !menuRef.current.contains(target)) setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onClick);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onClick);
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   const navItems = (
     <>
@@ -62,9 +84,11 @@ export default function Navbar({ lang, links }: NavbarProps) {
 
       {/* Mobile trigger */}
       <button
+        ref={triggerRef}
         type="button"
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
+        aria-controls="mobile-nav"
         onClick={() => setOpen((v) => !v)}
         className="md:hidden text-white p-3 -m-1"
       >
@@ -73,7 +97,7 @@ export default function Navbar({ lang, links }: NavbarProps) {
 
       {/* Mobile dropdown */}
       {open && (
-        <div className="md:hidden absolute top-full left-0 right-0 mt-2 mx-4 rounded-2xl border border-white/10 bg-black/90 backdrop-blur-xl p-6 flex flex-col gap-4 text-base text-[var(--color-muted-2)] font-medium shadow-2xl">
+        <div ref={menuRef} id="mobile-nav" role="dialog" aria-label="Site navigation" className="md:hidden absolute top-full left-0 right-0 mt-2 mx-4 rounded-2xl border border-white/10 bg-black/90 backdrop-blur-xl p-6 flex flex-col gap-4 text-base text-[var(--color-muted-2)] font-medium shadow-2xl">
           {navItems}
           <div className="pt-2 min-h-[44px] flex items-center">{langSwitch}</div>
         </div>
