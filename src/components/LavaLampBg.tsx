@@ -281,7 +281,7 @@ export default function LavaLampBg() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="absolute inset-0 w-full h-full pointer-events-none opacity-70 mix-blend-screen"
+      className="absolute inset-0 w-full h-full pointer-events-none opacity-60"
       style={{ zIndex: -1 }}
     />
   );

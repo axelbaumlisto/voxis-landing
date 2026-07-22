@@ -29,8 +29,18 @@ export default function Hero({ badge, title, description, downloadText, docsText
   return (
     <section className="section-hero flex flex-col items-center justify-center text-center relative z-10 min-h-[68vh] pt-24 pb-16">
       <LavaLampBg />
+      {/* readability scrim: гасит центр blob'а под текстом, края лавы остаются видны */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          zIndex: 0,
+          background:
+            "radial-gradient(60% 55% at 50% 50%, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.4) 55%, transparent 100%)",
+        }}
+      />
 
-      <Container width="prose" className="flex flex-col items-center">
+      <Container width="prose" className="relative z-[1] flex flex-col items-center">
         <motion.div {...rise(0)} className="badge mb-[var(--space-lg)]">
           <span className="badge-dot animate-pulse" />
           {badge}
@@ -46,7 +56,8 @@ export default function Hero({ badge, title, description, downloadText, docsText
 
         <motion.p
           {...rise(0.1)}
-          className="text-lg md:text-2xl text-[var(--color-muted-2)] mb-[var(--space-xl)] font-normal"
+          className="text-lg md:text-2xl text-white/90 mb-[var(--space-xl)] font-normal"
+          style={{ textShadow: "0 1px 12px rgba(0,0,0,0.6)" }}
         >
           {description}
         </motion.p>
