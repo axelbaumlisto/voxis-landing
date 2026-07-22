@@ -16,7 +16,7 @@ export default function Navbar({ lang, links }: NavbarProps) {
       <div className="flex items-center gap-6 text-sm text-[var(--color-muted-2)] font-medium">
         <a href="#architecture" className="hover:text-white transition-colors hidden md:block">{links.architecture}</a>
         <a href="https://docs.voxis.top" className="hover:text-white transition-colors hidden md:block">{links.docs}</a>
-        <a href="https://github.com/axelbaumlisto/voice" className="hover:text-white transition-colors hidden md:block">{links.github}</a>
+        <a href="https://github.com/axelbaumlisto/voxis" className="hover:text-white transition-colors hidden md:block">{links.github}</a>
         
         <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full border border-[var(--color-border)] ml-4 backdrop-blur-md">
           <Globe className="w-4 h-4 text-[var(--color-muted)]" />
