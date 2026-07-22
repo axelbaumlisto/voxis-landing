@@ -110,7 +110,7 @@ function BoardLayer({
         <div className="flex items-center gap-8 relative z-10">
           <motion.div className="w-12 h-32 bg-white/5 border border-white/10 rounded-md shadow-inner"></motion.div>
 
-          <div className={`w-56 h-56 border-2 ${isActive ? step.glow : 'border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)]'} bg-[#050505] rounded-[var(--glass-radius)] flex flex-col items-center justify-center relative transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-expo)]`}>
+          <div className={`w-56 h-56 border-2 ${isActive ? step.glow : 'border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)]'} bg-[var(--color-surface-2)] rounded-[var(--glass-radius)] flex flex-col items-center justify-center relative transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-expo)]`}>
             <div className="absolute top-3 left-3 w-2 h-2 rounded-full bg-zinc-800"></div>
             <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-zinc-800"></div>
             <div className="absolute bottom-3 left-3 w-2 h-2 rounded-full bg-zinc-800"></div>
@@ -160,7 +160,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
 
       {/* DESKTOP 3D fly-through (skipped for reduced-motion) */}
       {isDesktop && !reduce && (
-        <div className="hidden md:flex sticky top-0 h-screen w-full flex-col overflow-hidden px-10 lg:px-20 bg-gradient-to-b from-[#050505] to-[#0a0a0a]">
+        <div className="hidden md:flex sticky top-0 h-screen w-full flex-col overflow-hidden px-10 lg:px-20 bg-gradient-to-b from-[var(--color-surface-2)] to-[var(--color-surface)]">
           {/* Section heading — in-flow at top so the 3D content starts directly beneath it */}
           <div className="pt-[var(--space-4xl)] pb-[var(--space-md)] text-center z-40 pointer-events-none shrink-0">
             <h2 className="text-[length:var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)] font-extrabold text-white">

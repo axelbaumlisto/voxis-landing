@@ -20,7 +20,7 @@ export default function Showcase({ lang }: { lang: "en" | "ru" }) {
           {shots.map((cap, i) => (
             <figure key={i} className="rounded-[var(--glass-radius)] border border-white/10 overflow-hidden bg-white/[0.02]">
               {/* TODO(owner): replace with <img src="/screenshots/xxx.png" .../> */}
-              <div className="aspect-video grid place-items-center bg-gradient-to-br from-[var(--color-surface,#0a0a0a)] to-black">
+              <div className="aspect-video grid place-items-center bg-gradient-to-br from-[var(--color-surface)] to-black">
                 <ImageIcon className="w-8 h-8 text-zinc-700" aria-hidden />
               </div>
               <figcaption className="p-[var(--space-sm)] text-center text-sm text-zinc-400">{cap}</figcaption>
