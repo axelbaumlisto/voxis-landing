@@ -158,7 +158,16 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
       {/* DESKTOP 3D fly-through (skipped for reduced-motion) */}
       {isDesktop && !reduce && (
         <div className="hidden md:flex sticky top-0 h-screen w-full flex-row items-center justify-center overflow-hidden px-10 lg:px-20 bg-gradient-to-b from-[#050505] to-[#0a0a0a]">
-          
+          {/* Section heading — sticky anchor for #architecture */}
+          <div className="absolute top-12 left-1/2 -translate-x-1/2 text-center z-40 pointer-events-none">
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+              {intl.title}
+            </h2>
+            <p className="text-sm md:text-base uppercase tracking-widest text-[var(--color-muted-3)] mt-2 font-mono">
+              {intl.subtitle}
+            </p>
+          </div>
+
           {/* Left Side: Info Glass */}
           <div className="w-1/2 flex flex-col items-center justify-center z-30 h-full relative">
             <div className="w-full max-w-lg relative">
