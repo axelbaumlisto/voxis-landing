@@ -1,7 +1,7 @@
-import { RootDocument, metadata } from "../root-layout.shared";
+import { RootDocument, buildMetadata } from "../root-layout.shared";
 import "../globals.css";
 
-export { metadata };
+export const metadata = buildMetadata("ru");
 
 export default function RootLayout({
   children,

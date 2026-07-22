@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { Mic, Zap, Brain, Keyboard, Terminal, Cpu } from "lucide-react";
 import type { Step, IconKey } from "../data/architecture";
 import { useMediaQuery } from "../hooks/useMediaQuery";
@@ -138,7 +138,9 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
   const containerRef = useRef(null);
   const [active, setActive] = useState(0);
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const reduce = useReducedMotion();
+  // SSR-safe reduced-motion (useReducedMotion from framer is NOT SSR-safe for structural className → hydration mismatch).
+  // useMediaQuery uses useSyncExternalStore with getServerSnapshot=false, so server and first client render agree.
+  const reduce = useMediaQuery("(prefers-reduced-motion: reduce)");
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
