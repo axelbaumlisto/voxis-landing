@@ -57,7 +57,7 @@ export default function Navbar({ lang, links }: NavbarProps) {
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="md:hidden text-white p-2"
+        className="md:hidden text-white p-3 -m-1"
       >
         {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
