@@ -32,9 +32,9 @@ export default function Footer({ lang = "en" }: FooterProps) {
           <span className="text-zinc-500 max-w-xs">{t.tagline}</span>
         </div>
         <nav className="flex flex-wrap gap-x-6 gap-y-2 text-zinc-400">
-          <a href="https://docs.voxis.top" className="hover:text-white transition-colors">{t.docs}</a>
-          <a href="https://github.com/axelbaumlisto/voxis" className="hover:text-white transition-colors">{t.github}</a>
-          <a href="https://github.com/axelbaumlisto/voxis/releases" className="hover:text-white transition-colors">{t.download}</a>
+          <a href="https://docs.voxis.top" className="hover:text-[var(--color-accent)] transition-colors">{t.docs}</a>
+          <a href="https://github.com/axelbaumlisto/voxis" className="hover:text-[var(--color-accent)] transition-colors">{t.github}</a>
+          <a href="https://github.com/axelbaumlisto/voxis/releases" className="hover:text-[var(--color-accent)] transition-colors">{t.download}</a>
         </nav>
       </Container>
       <div className="border-t border-white/5">

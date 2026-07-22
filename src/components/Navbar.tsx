@@ -22,9 +22,9 @@ export default function Navbar({ lang, links }: NavbarProps) {
 
   const navItems = (
     <>
-      <a href="#architecture" onClick={() => setOpen(false)} className="hover:text-white transition-colors duration-200 ease-out">{links.architecture}</a>
-      <a href="https://docs.voxis.top" className="hover:text-white transition-colors duration-200 ease-out">{links.docs}</a>
-      <a href="https://github.com/axelbaumlisto/voxis" className="hover:text-white transition-colors duration-200 ease-out">{links.github}</a>
+      <a href="#architecture" onClick={() => setOpen(false)} className="hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.architecture}</a>
+      <a href="https://docs.voxis.top" className="hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.docs}</a>
+      <a href="https://github.com/axelbaumlisto/voxis" className="hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.github}</a>
     </>
   );
 
@@ -35,11 +35,11 @@ export default function Navbar({ lang, links }: NavbarProps) {
         <>
           <span className="text-white font-bold">EN</span>
           <span className="text-zinc-600">|</span>
-          <Link href="/ru" className="hover:text-white transition-colors">RU</Link>
+          <Link href="/ru" className="hover:text-[var(--color-accent)] transition-colors">RU</Link>
         </>
       ) : (
         <>
-          <Link href="/" className="hover:text-white transition-colors">EN</Link>
+          <Link href="/" className="hover:text-[var(--color-accent)] transition-colors">EN</Link>
           <span className="text-zinc-600">|</span>
           <span className="text-white font-bold">RU</span>
         </>
