@@ -15,8 +15,8 @@ export interface Step {
 // Unified cyan brand ramp: stage identity comes from icon + eyebrow number,
 // not colour. Keeps cohesion with --color-accent (#22d3ee) and LavaLamp palette.
 const CYAN = {
-  glow: "shadow-[0_0_40px_rgba(34,211,238,0.4)] border-cyan-400",
-  iconColor: "text-cyan-400",
+  glow: "shadow-[0_0_40px_rgba(34,211,238,0.4)] border-[var(--color-accent)]",
+  iconColor: "text-[var(--color-accent)]",
   hex: "#22d3ee",
 } as const;
 

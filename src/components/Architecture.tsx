@@ -267,7 +267,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
 
 function BentoStack({ steps, intl }: { steps: Step[]; intl: ArchIntl }) {
   return (
-    <div className="flex flex-col items-center justify-center px-4 py-[var(--space-3xl)] gap-8">
+    <div className="flex flex-col items-center justify-center px-4 py-[var(--space-2xl)] md:py-[var(--space-3xl)] gap-8">
       <div className="text-center mb-8">
         <h2 className="text-[length:var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)] font-extrabold text-white">{intl.title}</h2>
         <p className="text-zinc-400 mt-2">{intl.subtitle}</p>
