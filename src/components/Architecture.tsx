@@ -163,7 +163,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
           <div className="w-1/2 flex flex-col items-center justify-center z-30 h-full relative">
             <div className="w-full max-w-lg relative">
               
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout" initial={false}>
                 {steps.map((step, i) => (
                   i === active && (
                     <motion.div
@@ -227,6 +227,18 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
                 />
               ))}
             </motion.div>
+          </div>
+
+          {/* Progress stepper — active step out of total, pinned bottom */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 z-40" aria-hidden>
+            {steps.map((_, i) => (
+              <span
+                key={i}
+                className={`h-1 rounded-full transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  i === active ? "w-10 bg-white" : "w-4 bg-white/20"
+                }`}
+              />
+            ))}
           </div>
         </div>
       )}
