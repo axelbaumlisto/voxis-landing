@@ -114,14 +114,6 @@ body {
 }
 
 /* ── Background textures ── */
-.bg-grid {
-  background-size: 50px 50px;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
-  mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
-}
-
 .text-gradient {
   background: linear-gradient(180deg, #ffffff 0%, #f4f4f5 100%);
   -webkit-background-clip: text;
@@ -138,43 +130,7 @@ body {
   background-size: 20px 20px, 40px 40px, 40px 40px;
 }
 
-/* Animated PCB trace flow (active layer only) */
-@keyframes traceFlow {
-  to { stroke-dashoffset: -24; }
-}
-
 /* ── Component utilities ── */
-@utility glass-card {
-  position: relative;
-  overflow: hidden;
-  background-color: var(--glass-fill);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--glass-radius);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-@utility glass-card-strong {
-  background-color: var(--glass-fill-strong);
-  backdrop-filter: blur(var(--glass-blur-strong));
-  -webkit-backdrop-filter: blur(var(--glass-blur-strong));
-}
-@utility glass-card-max {
-  border-radius: var(--glass-radius-lg);
-  backdrop-filter: blur(var(--glass-blur-max));
-  -webkit-backdrop-filter: blur(var(--glass-blur-max));
-}
-@utility glass-tile {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--glass-fill-solid);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--glass-radius-sm);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
-  padding: 1rem;
-}
-
 @utility btn-base {
   display: inline-flex;
   align-items: center;
@@ -242,13 +198,6 @@ button:focus-visible {
   box-shadow: 0 0 10px rgba(34, 211, 238, 0.8);
 }
 
-@utility pill {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
 @utility pill-code {
   display: flex;
   flex-direction: column;
