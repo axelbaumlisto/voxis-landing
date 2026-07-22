@@ -26,7 +26,7 @@ export default function Footer({ lang = "en" }: FooterProps) {
 
   return (
     <footer className="w-full border-t border-white/5 z-10 bg-black">
-      <Container width="page" className="py-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-sm">
+      <Container width="page" className="py-[var(--space-3xl)] flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-sm">
         <div className="flex flex-col gap-2">
           <span className="text-xl font-black tracking-tighter text-white">VOXIS</span>
           <span className="text-zinc-500 max-w-xs">{t.tagline}</span>
@@ -38,7 +38,7 @@ export default function Footer({ lang = "en" }: FooterProps) {
         </nav>
       </Container>
       <div className="border-t border-white/5">
-        <Container width="page" className="py-4 text-center text-zinc-500 text-xs">
+        <Container width="page" className="py-[var(--space-sm)] text-center text-zinc-500 text-xs">
           {t.rights}
         </Container>
       </div>
