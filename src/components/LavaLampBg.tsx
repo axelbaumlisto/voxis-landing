@@ -218,11 +218,11 @@ export default function LavaLampBg() {
     // uAA is set inside resize() so it re-evaluates when the viewport crosses
     // the 768px breakpoint (rotate/resize) without needing a page reload.
     const uAA = gl.getUniformLocation(prog, "uAA");
-    // Brand-aligned cool palette: cyan → blue → purple → teal
-    // (matches --color-accent: #22d3ee and Architecture stage-1 hue)
+    // Brand-aligned cool palette: cyan → blue → deep cyan → teal
+    // (matches --color-accent: #22d3ee and Architecture cyan mono ramp)
     gl.uniform3f(gl.getUniformLocation(prog, "uCol1"), 0.13, 0.827, 0.933); // #22d3ee cyan
     gl.uniform3f(gl.getUniformLocation(prog, "uCol2"), 0.231, 0.510, 0.965); // #3b82f6 blue
-    gl.uniform3f(gl.getUniformLocation(prog, "uCol3"), 0.659, 0.333, 0.969); // #a855f7 purple
+    gl.uniform3f(gl.getUniformLocation(prog, "uCol3"), 0.024, 0.714, 0.831); // #06b6d4 deep cyan
     gl.uniform3f(gl.getUniformLocation(prog, "uCol4"), 0.204, 0.827, 0.706); // teal
 
     let phase = 0;
