@@ -1,13 +1,22 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Mic, Zap, Brain, Keyboard, Terminal, Cpu } from "lucide-react";
 import type { Step, IconKey } from "../data/architecture";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 
+export interface ArchIntl {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  scrollHint: string;
+  subtitle: string;
+}
+
 interface ArchitectureProps {
   steps: Step[];
+  intl: ArchIntl;
 }
 
 const IconMap: Record<IconKey, React.ComponentType<{ className?: string }>> = {
@@ -28,13 +37,11 @@ function BoardLayer({
   index,
   scrollYProgress,
   active,
-  stepCount,
 }: {
   step: Step;
   index: number;
   scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"];
   active: number;
-  stepCount: number;
 }) {
   const i = index;
   const Icon = IconMap[step.iconName];
@@ -144,10 +151,12 @@ function BoardLayer({
   );
 }
 
-export default function Architecture({ steps }: ArchitectureProps) {
+export default function Architecture({ steps, intl }: ArchitectureProps) {
   const containerRef = useRef(null);
   const [active, setActive] = useState(0);
+  const [showLayers, setShowLayers] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const reduce = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -155,6 +164,7 @@ export default function Architecture({ steps }: ArchitectureProps) {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    setShowLayers(latest >= 0.05);
     let f = 0;
     if (latest >= 0.1) {
       f = ((latest - 0.1) / 0.9) * 4.99;
@@ -167,76 +177,48 @@ export default function Architecture({ steps }: ArchitectureProps) {
   const introPointer = useTransform(scrollYProgress, [0, 0.05], ["auto", "none"]);
 
   return (
-    <section id="architecture" ref={containerRef} className="relative w-full bg-black md:h-[600vh]">
-      
-      {/* --- MOBILE VIEW: Bento Stack --- */}
-      <div className="md:hidden flex flex-col items-center justify-center px-4 py-20 gap-8">
-        <div className="text-center mb-8">
-           <h2 className="text-4xl font-extrabold text-white">System Layers</h2>
-           <p className="text-zinc-400 mt-2">SOLID Rust Architecture</p>
-        </div>
-        {steps.map((step, i) => {
-          const Icon = IconMap[step.iconName];
-          return (
-            <div key={i} className={`w-full max-w-lg bg-black/60 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden ${step.glow}`}>
-              <div className="absolute inset-0 pcb-grid opacity-10"></div>
-              <div className="relative z-10 p-6 flex flex-col items-start text-left border-white/5">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className={`p-3 rounded-xl bg-black/50 border border-white/10 ${step.iconColor}`}>
-                    {Icon && <Icon className="w-6 h-6" />}
-                  </div>
-                  <div>
-                    <div className="text-[10px] font-mono font-bold tracking-widest uppercase" style={{ color: step.hex }}>
-                      {step.className}
-                    </div>
-                    <h3 className="text-xl font-extrabold text-white">
-                      {step.title}
-                    </h3>
-                  </div>
-                </div>
-                <p className="text-zinc-300 text-sm leading-relaxed font-light mb-4">
-                  {step.desc}
-                </p>
-              </div>
-            </div>
-          );
-        })}
+    <section id="architecture" ref={containerRef} className={`relative w-full bg-black ${reduce ? "" : "md:h-[320vh]"}`}>
+      {/* MOBILE + reduced-motion fallback: always-visible bento stack */}
+      <div className={reduce ? "block" : "md:hidden"}>
+        <BentoStack steps={steps} intl={intl} />
       </div>
 
-      {/* --- DESKTOP VIEW: Exploding Multi-Layer Chip Fly-Through --- */}
-      {isDesktop && (
+      {/* DESKTOP 3D fly-through (skipped for reduced-motion) */}
+      {isDesktop && !reduce && (
         <div className="hidden md:flex sticky top-0 h-screen w-full flex-row items-center justify-center overflow-hidden px-10 lg:px-20 bg-gradient-to-b from-[#050505] to-[#0a0a0a]">
           
           {/* Left Side: Info Glass */}
           <div className="w-1/2 flex flex-col items-center justify-center z-30 h-full relative">
             <div className="w-full max-w-lg relative">
               
-              {/* Intro Card (0% - 5% scroll) */}
-              <motion.div
-                style={{ opacity: introOpacity, y: introY, pointerEvents: introPointer as any, position: "absolute", width: "100%", zIndex: 40 }}
-                className="bg-black/60 backdrop-blur-3xl rounded-[32px] border border-white/20 shadow-2xl shadow-emerald-500/20 overflow-hidden"
-              >
-                <div className="p-10 relative">
-                   <div className="absolute inset-0 pcb-grid opacity-10"></div>
-                   <div className="relative z-10">
-                     <div className="text-xs font-mono font-bold tracking-widest uppercase mb-1 text-emerald-400">
-                       UNDER THE HOOD
+              {/* Intro Card (only while not yet exploded) */}
+              {!showLayers && (
+                <motion.div
+                  style={{ opacity: introOpacity, y: introY, pointerEvents: introPointer as unknown as React.CSSProperties["pointerEvents"] }}
+                  className="absolute top-1/2 -translate-y-1/2 w-full z-40 bg-black/60 backdrop-blur-3xl rounded-[32px] border border-white/20 shadow-2xl shadow-emerald-500/20 overflow-hidden"
+                >
+                  <div className="p-10 relative">
+                     <div className="absolute inset-0 pcb-grid opacity-10"></div>
+                     <div className="relative z-10">
+                       <div className="text-xs font-mono font-bold tracking-widest uppercase mb-1 text-emerald-400">
+                         {intl.eyebrow}
+                       </div>
+                       <h3 className="text-4xl font-extrabold text-white mb-6">
+                         {intl.title}
+                       </h3>
+                       <p className="text-zinc-300 text-lg leading-relaxed font-light mb-6">
+                         {intl.intro}
+                         <br/><br/>
+                         {intl.scrollHint}
+                       </p>
                      </div>
-                     <h3 className="text-4xl font-extrabold text-white mb-6">
-                       System Architecture
-                     </h3>
-                     <p className="text-zinc-300 text-lg leading-relaxed font-light mb-6">
-                       A monolithic Rust core orchestrating OS events, audio streams, and cloud inference. 
-                       <br/><br/>
-                       <strong>Scroll down</strong> to explode the chip and fly through the layers.
-                     </p>
-                   </div>
-                </div>
-              </motion.div>
+                  </div>
+                </motion.div>
+              )}
 
               {/* Layer Cards (5% - 100% scroll) */}
               <AnimatePresence mode="wait">
-                {scrollYProgress.get() >= 0.05 && steps.map((step, i) => (
+                {showLayers && steps.map((step, i) => (
                   i === active && (
                     <motion.div
                       key={i}
@@ -296,7 +278,6 @@ export default function Architecture({ steps }: ArchitectureProps) {
                   index={i}
                   scrollYProgress={scrollYProgress}
                   active={active}
-                  stepCount={steps.length}
                 />
               ))}
             </motion.div>
@@ -304,5 +285,38 @@ export default function Architecture({ steps }: ArchitectureProps) {
         </div>
       )}
     </section>
+  );
+}
+
+function BentoStack({ steps, intl }: { steps: Step[]; intl: ArchIntl }) {
+  return (
+    <div className="flex flex-col items-center justify-center px-4 py-20 gap-8">
+      <div className="text-center mb-8">
+        <h2 className="text-4xl font-extrabold text-white">{intl.title}</h2>
+        <p className="text-zinc-400 mt-2">{intl.subtitle}</p>
+      </div>
+      {steps.map((step, i) => {
+        const Icon = IconMap[step.iconName];
+        return (
+          <div key={i} className={`w-full max-w-lg bg-black/60 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden ${step.glow}`}>
+            <div className="absolute inset-0 pcb-grid opacity-10"></div>
+            <div className="relative z-10 p-6 flex flex-col items-start text-left border-white/5">
+              <div className="flex items-center gap-4 mb-4">
+                <div className={`p-3 rounded-xl bg-black/50 border border-white/10 ${step.iconColor}`}>
+                  {Icon && <Icon className="w-6 h-6" />}
+                </div>
+                <div>
+                  <div className="text-[10px] font-mono font-bold tracking-widest uppercase" style={{ color: step.hex }}>
+                    {step.className}
+                  </div>
+                  <h3 className="text-xl font-extrabold text-white">{step.title}</h3>
+                </div>
+              </div>
+              <p className="text-zinc-300 text-sm leading-relaxed font-light mb-4">{step.desc}</p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 }
