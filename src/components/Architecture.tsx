@@ -34,11 +34,13 @@ function BoardLayer({
   index,
   scrollYProgress,
   active,
+  stepCount,
 }: {
   step: Step;
   index: number;
   scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"];
   active: number;
+  stepCount: number;
 }) {
   const i = index;
   const Icon = IconMap[step.iconName];
@@ -48,7 +50,7 @@ function BoardLayer({
     // Peek from frame one: all 5 layers already spread. Scroll moves focus (fly),
     // not "explode from compacted chip". No global camera offset — the stack is
     // pre-arranged for hero-peek visibility.
-    const fly = p * 4.99;
+    const fly = p * (stepCount - 0.01);
     const distance = i - fly;
     const baseDepth = distance * -SPREAD;
     const pop = Math.abs(distance) < EPSILON ? FOCUS_POP * (1 - Math.abs(distance) / EPSILON) : 0;
@@ -144,7 +146,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const f = latest * 4.99;
+    const f = latest * (steps.length - 0.01);
     setActive(Math.min(steps.length - 1, Math.max(0, Math.floor(f))));
   });
 
@@ -235,6 +237,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
                   index={i}
                   scrollYProgress={scrollYProgress}
                   active={active}
+                  stepCount={steps.length}
                 />
               ))}
             </motion.div>
