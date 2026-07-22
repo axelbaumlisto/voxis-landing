@@ -162,7 +162,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
         <div className="hidden md:flex sticky top-0 h-screen w-full flex-col overflow-hidden px-10 lg:px-20 bg-gradient-to-b from-[#050505] to-[#0a0a0a]">
           {/* Section heading — in-flow at top so the 3D content starts directly beneath it */}
           <div className="pt-[var(--space-2xl)] pb-[var(--space-md)] text-center z-40 pointer-events-none shrink-0">
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+            <h2 className="text-[length:var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)] font-extrabold text-white">
               {intl.title}
             </h2>
             <p className="text-sm md:text-base uppercase tracking-widest text-[var(--color-muted-3)] mt-2 font-mono">
@@ -198,7 +198,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
                                 <div className="text-xs font-mono font-bold tracking-widest uppercase mb-1" style={{ color: step.hex }}>
                                   {step.subtitle}
                                 </div>
-                                <h3 className="text-4xl font-extrabold text-white">
+                                <h3 className="text-[length:var(--text-h2)] leading-[var(--text-h2--line-height)] font-extrabold text-white">
                                   {step.title}
                                 </h3>
                               </div>
@@ -267,7 +267,7 @@ function BentoStack({ steps, intl }: { steps: Step[]; intl: ArchIntl }) {
   return (
     <div className="flex flex-col items-center justify-center px-4 py-20 gap-8">
       <div className="text-center mb-8">
-        <h2 className="text-4xl font-extrabold text-white">{intl.title}</h2>
+        <h2 className="text-[length:var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)] font-extrabold text-white">{intl.title}</h2>
         <p className="text-zinc-400 mt-2">{intl.subtitle}</p>
       </div>
       {steps.map((step, i) => {

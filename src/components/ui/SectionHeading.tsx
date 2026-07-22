@@ -13,17 +13,17 @@ interface SectionHeadingProps {
 }
 
 const titleSize = {
-  sm: "text-2xl md:text-3xl",
-  md: "text-4xl md:text-5xl",
-  lg: "text-4xl md:text-6xl",
-  hero: "text-5xl md:text-8xl tracking-tighter",
+  sm: "text-[length:var(--text-h2)] leading-[var(--text-h2--line-height)] tracking-[var(--text-h2--letter-spacing)]",
+  md: "text-[length:var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)]",
+  lg: "text-[length:var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)]",
+  hero: "text-[length:var(--text-display)] leading-[var(--text-display--line-height)] tracking-[var(--text-display--letter-spacing)]",
 } as const;
 
 const descSize = {
-  sm: "text-sm",
-  md: "text-base md:text-lg",
-  lg: "text-lg md:text-xl",
-  hero: "text-lg md:text-2xl",
+  sm: "text-[length:var(--text-body)] leading-[var(--text-body--line-height)]",
+  md: "text-[length:var(--text-body)] leading-[var(--text-body--line-height)]",
+  lg: "text-[length:var(--text-lead)] leading-[var(--text-lead--line-height)]",
+  hero: "text-[length:var(--text-lead)] leading-[var(--text-lead--line-height)]",
 } as const;
 
 export default function SectionHeading({

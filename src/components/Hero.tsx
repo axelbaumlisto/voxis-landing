@@ -53,14 +53,14 @@ export default function Hero({ badge, title, description, downloadText, docsText
         {/* SectionHeading exception: hero keeps separate motion.h1/motion.p for gradient text + staggered rise. */}
         <motion.h1
           {...rise(0.05)}
-          className={`text-5xl md:text-8xl font-extrabold ${titleClassName} mb-[var(--space-md)] text-gradient`}
+          className={`text-[length:var(--text-display)] leading-[var(--text-display--line-height)] tracking-[var(--text-display--letter-spacing)] font-extrabold ${titleClassName} mb-[var(--space-md)] text-gradient`}
         >
           {title}
         </motion.h1>
 
         <motion.p
           {...rise(0.1)}
-          className="text-lg md:text-2xl text-white/90 mb-[var(--space-xl)] font-normal"
+          className="text-[length:var(--text-lead)] leading-[var(--text-lead--line-height)] text-white/90 mb-[var(--space-xl)] font-normal"
           style={{ textShadow: "0 1px 12px rgba(0,0,0,0.6)" }}
         >
           {description}
