@@ -232,8 +232,8 @@ body {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 9999px;
-  background-color: #34d399;
-  box-shadow: 0 0 10px rgba(52, 211, 153, 0.8);
+  background-color: var(--color-accent);
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.8);
 }
 
 @utility pill {
