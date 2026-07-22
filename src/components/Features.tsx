@@ -1,5 +1,6 @@
 import { Shield, Zap, HardDrive, Plug, Palette, MonitorSmartphone } from "lucide-react";
 import Container from "./ui/Container";
+import SectionHeading from "./ui/SectionHeading";
 
 const ICONS = { Shield, Zap, HardDrive, Plug, Palette, MonitorSmartphone };
 
@@ -34,10 +35,7 @@ export default function Features({ lang }: { lang: "en" | "ru" }) {
   return (
     <section className="section bg-black relative z-10 border-t border-white/5">
       <Container width="page">
-        <div className="text-center mb-[var(--space-2xl)]">
-          <h2 className="text-[length:var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)] font-extrabold text-white">{t.heading}</h2>
-          <p className="text-[var(--color-muted-2)] mt-[var(--space-sm)] text-lg">{t.sub}</p>
-        </div>
+        <SectionHeading title={t.heading} subtitle={t.sub} />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[var(--space-md)]">
           {t.items.map((it, i) => {
             const Icon = ICONS[it.icon as keyof typeof ICONS];

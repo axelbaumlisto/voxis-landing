@@ -1,4 +1,5 @@
 import Container from "./ui/Container";
+import SectionHeading from "./ui/SectionHeading";
 
 export default function Faq({ lang }: { lang: "en" | "ru" }) {
   const isRu = lang === "ru";
@@ -25,7 +26,7 @@ export default function Faq({ lang }: { lang: "en" | "ru" }) {
   return (
     <section className="section bg-black relative z-10 border-t border-white/5">
       <Container width="content">
-        <h2 className="text-[length:var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)] font-extrabold text-white text-center mb-[var(--space-2xl)]">{t.heading}</h2>
+        <SectionHeading title={t.heading} />
         <div className="flex flex-col gap-[var(--space-md)]">
           {t.items.map((it, i) => (
             <details key={i} className="group rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.02] p-[var(--space-lg)] open:border-[var(--color-accent)]/30">
