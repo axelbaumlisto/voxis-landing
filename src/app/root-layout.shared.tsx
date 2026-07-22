@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   description:
     "A completely private, blazing fast desktop voice dictation engine built with Tauri v2, Rust, and Whisper AI.",
   keywords: ["voice dictation", "speech to text", "Tauri", "Rust", "Whisper", "Groq", "desktop app"],
+  alternates: {
+    canonical: "https://voxis.top",
+    languages: { en: "https://voxis.top", ru: "https://voxis.top/ru" },
+  },
   openGraph: {
     title: "Voxis — Speak your code. Write at lightspeed.",
     description:
