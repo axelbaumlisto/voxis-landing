@@ -56,13 +56,13 @@ export default function Navbar({ lang, links }: NavbarProps) {
       {lang === "en" ? (
         <>
           <span className="text-white font-bold">EN</span>
-          <span className="text-zinc-600">|</span>
+          <span className="text-[var(--color-muted-3)]" aria-hidden="true">|</span>
           <Link href="/ru" className="hover:text-[var(--color-accent)] transition-colors">RU</Link>
         </>
       ) : (
         <>
           <Link href="/" className="hover:text-[var(--color-accent)] transition-colors">EN</Link>
-          <span className="text-zinc-600">|</span>
+          <span className="text-[var(--color-muted-3)]" aria-hidden="true">|</span>
           <span className="text-white font-bold">RU</span>
         </>
       )}
