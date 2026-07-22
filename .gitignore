@@ -42,3 +42,7 @@ next-env.d.ts
 
 # local vercel deploy logs
 vercel_*.log
+
+# worker scratch
+.tmp-*.md
+.pi-subagents/
