@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
 
-// Route segment config
-export const runtime = "edge";
+// Route segment config. NOTE: no `runtime = "edge"` — on Next 16 the edge
+// runtime produced an empty (0-byte) ImageResponse on Vercel; the default
+// Node runtime renders it correctly.
 export const alt = "Voxis — Speak your code. Write at lightspeed.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -50,6 +51,8 @@ export default function OpengraphImage() {
         <div
           style={{
             marginTop: 36,
+            display: "flex",
+            flexDirection: "column",
             color: "#ffffff",
             fontSize: 76,
             fontWeight: 700,
@@ -57,9 +60,10 @@ export default function OpengraphImage() {
             maxWidth: 940,
           }}
         >
-          Speak your code.
-          <br />
-          Write at lightspeed.
+          {/* satori (behind ImageResponse) does not support <br/>; use stacked
+              flex children instead. */}
+          <span>Speak your code.</span>
+          <span>Write at lightspeed.</span>
         </div>
         <div
           style={{
@@ -69,7 +73,7 @@ export default function OpengraphImage() {
             maxWidth: 900,
           }}
         >
-          Private, blazing-fast desktop voice dictation — Tauri&nbsp;v2 &middot; Rust &middot; Whisper
+          Private, blazing-fast desktop voice dictation — Tauri v2 · Rust · Whisper
         </div>
       </div>
     ),
