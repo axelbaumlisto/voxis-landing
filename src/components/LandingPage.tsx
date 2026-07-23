@@ -3,9 +3,11 @@
 import { MotionConfig } from "framer-motion";
 import Navbar from "./Navbar";
 import Hero from "./Hero";
+import HowItWorks from "./HowItWorks";
 import Architecture from "./Architecture";
 import Features from "./Features";
 import Showcase from "./Showcase";
+import GetStarted from "./GetStarted";
 import DownloadCta from "./DownloadCta";
 import Faq from "./Faq";
 import Footer from "./Footer";
@@ -44,9 +46,11 @@ export default function LandingPage({ lang }: { lang: "en" | "ru" }) {
       <main className="min-h-screen relative flex flex-col items-center bg-black w-full">
         <Navbar lang={lang} links={navLinks} />
         <Hero {...heroProps} />
+        <HowItWorks lang={lang} />
         <Architecture steps={isRu ? stepsRu : stepsEn} intl={archIntl} />
         <Features lang={lang} />
         <Showcase lang={lang} />
+        <GetStarted lang={lang} />
         <DownloadCta lang={lang} />
         <Faq lang={lang} />
         <Footer lang={lang} />

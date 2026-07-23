@@ -8,18 +8,22 @@ export default function Faq({ lang }: { lang: "en" | "ru" }) {
         heading: "Частые вопросы",
         items: [
           { q: "Куда уходит моё аудио?", a: "Напрямую в выбранный вами endpoint транскрипции (по умолчанию Groq). Voxis не проксирует и не хранит ваш звук на сторонних серверах." },
-          { q: "Можно ли использовать свой сервер?", a: "Да. Любой OpenAI-совместимый Whisper endpoint через api_url_override в настройках." },
-          { q: "Как настроить горячую клавишу?", a: "В настройках приложения — записываете любую комбинацию, удержание запускает запись, отпускание завершает." },
-          { q: "Какие ОС поддерживаются?", a: "Windows, macOS и Linux — единый движок на Tauri v2 + Rust." },
+          { q: "Нужен ли API-ключ?", a: "Да. По умолчанию — бесплатный тариф Groq, либо любой OpenAI-совместимый или свой endpoint. Ключ хранится локально, ваше аудио не проходит через наши серверы." },
+          { q: "Можно ли использовать свой сервер?", a: "Да. Любой OpenAI-совместимый Whisper endpoint — укажите свой URL в настройках." },
+          { q: "Как настроить горячую клавишу?", a: "Запишите любую комбинацию. Режим «удержание» (запись пока клавиша нажата) или «тумблер» (нажал — начал, нажал — остановил, удобно для длинной диктовки). Можно привязать отдельные клавиши к разным действиям." },
+          { q: "Какие языки поддерживаются?", a: "Автоопределение плюс 13 языков (русский, английский, немецкий, французский и др.) — плюс опция перевода на английский." },
+          { q: "Какие ОС поддерживаются?", a: "Windows 10+, macOS 12+ (Apple Silicon) и современный Linux — единый движок на Tauri v2 + Rust." },
         ],
       }
     : {
         heading: "Frequently asked",
         items: [
           { q: "Where does my audio go?", a: "Straight to your chosen transcription endpoint (Groq by default). Voxis does not proxy or store your audio on third-party servers." },
-          { q: "Can I use my own server?", a: "Yes. Any OpenAI-compatible Whisper endpoint via api_url_override in settings." },
-          { q: "How do I set the hotkey?", a: "In the app settings — record any combo; hold to start capture, release to finish." },
-          { q: "Which OSes are supported?", a: "Windows, macOS, and Linux — one Tauri v2 + Rust engine." },
+          { q: "Do I need an API key?", a: "Yes — the free Groq tier by default, or any OpenAI-compatible / self-hosted endpoint. Your key is stored locally and your audio never passes through our servers." },
+          { q: "Can I use my own server?", a: "Yes. Any OpenAI-compatible Whisper endpoint — just point it at your own URL in settings." },
+          { q: "How do I set the hotkey?", a: "Record any combo. Choose Hold mode (record while the key is held) or Toggle mode (tap to start, tap to stop — handy for long dictation). You can also bind separate keys to different actions." },
+          { q: "Which languages are supported?", a: "Auto-detect plus 13 languages (English, Russian, German, French and more) — with an optional translate-to-English mode." },
+          { q: "Which OSes are supported?", a: "Windows 10+, macOS 12+ (Apple Silicon), and modern Linux — one Tauri v2 + Rust engine." },
         ],
       };
 

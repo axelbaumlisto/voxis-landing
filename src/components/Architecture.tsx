@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
-import { Mic, Zap, Brain, Keyboard, Terminal, Cpu } from "lucide-react";
+import { Mic, Zap, Brain, Keyboard, Terminal, Cpu, Sparkles } from "lucide-react";
 import type { Step, IconKey } from "../data/architecture";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { DUR, EASE_OUT_EXPO } from "../lib/motion";
@@ -24,6 +24,7 @@ const IconMap: Record<IconKey, React.ComponentType<{ className?: string }>> = {
   zap: Zap,
   brain: Brain,
   keyboard: Keyboard,
+  sparkles: Sparkles,
 };
 
 const SPREAD = 620;
@@ -153,7 +154,7 @@ export default function Architecture({ steps, intl }: ArchitectureProps) {
   });
 
   return (
-    <section id="architecture" ref={containerRef} className={`relative w-full bg-black ${reduce ? "" : "md:h-[240vh]"}`}>
+    <section id="architecture" ref={containerRef} className={`relative w-full bg-black ${reduce ? "" : "md:h-[288vh]"}`}>
       {/* MOBILE + reduced-motion fallback: always-visible bento stack */}
       <div className={reduce ? "block" : "md:hidden"}>
         <BentoStack steps={steps} intl={intl} />

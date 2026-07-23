@@ -1,4 +1,4 @@
-export type IconKey = "terminal" | "cpu" | "mic" | "brain" | "keyboard" | "zap";
+export type IconKey = "terminal" | "cpu" | "mic" | "brain" | "keyboard" | "zap" | "sparkles";
 
 export interface Step {
   iconName: IconKey;
@@ -46,6 +46,12 @@ const layers = [
     ...CYAN,
   },
   {
+    iconName: "sparkles" as IconKey,
+    className: "llm::PostProcessor",
+    filePath: "src-tauri/src/llm/mod.rs",
+    ...CYAN,
+  },
+  {
     iconName: "keyboard" as IconKey,
     className: "output::OutputHandler",
     filePath: "src-tauri/src/output/mod.rs",
@@ -56,29 +62,34 @@ const layers = [
 export const stepsEn: Step[] = layers.map((layer, index) => {
   const content = [
     {
-      title: "OS Boundary",
-      subtitle: "STAGE 1 // INPUT",
-      desc: "Global low-level OS hooks via rdev. Emits filtered hotkey-pressed/hotkey-released intent events to Tauri for instant capture.",
+      title: "Capture the keypress",
+      subtitle: "STAGE 1 // CAPTURE",
+      desc: "Your hotkey is caught by a global low-level OS hook, so recording starts instantly from any app. Built on rdev.",
     },
     {
-      title: "State Machine",
-      subtitle: "STAGE 2 // CORE",
-      desc: "A pure state machine serializing the lifecycle. Real side effects (like appending to the TranscriptionQueue) are decoupled into dedicated orchestrators.",
+      title: "Coordinate the flow",
+      subtitle: "STAGE 2 // COORDINATE",
+      desc: "A pure state machine drives the record\u2192transcribe\u2192output lifecycle and queues each take, so back-to-back dictations never collide.",
     },
     {
-      title: "Audio Subsystem",
-      subtitle: "STAGE 3 // SENSORS",
-      desc: "Low-latency CPAL capture using safe lock recovery (lock_or_recover). Performs VAD and WAV encoding cleanly upon stop().",
+      title: "Listen & filter",
+      subtitle: "STAGE 3 // LISTEN",
+      desc: "Low-latency audio capture via CPAL, with Silero voice-activity detection trimming silence so only real speech is ever sent.",
     },
     {
-      title: "AI Inference",
-      subtitle: "STAGE 4 // CLOUD",
-      desc: "Multipart async upload to Groq LPU (or custom OpenAI endpoints via api_url_override) parsed into a strictly-typed Result.",
+      title: "Transcribe",
+      subtitle: "STAGE 4 // TRANSCRIBE",
+      desc: "The clip streams to a Whisper-compatible endpoint \u2014 Groq by default, or any OpenAI-compatible / self-hosted URL you point it at.",
     },
     {
-      title: "Output Engine",
-      subtitle: "STAGE 5 // ACTUATOR",
-      desc: "Surfacing back to OS. Simulates keystrokes using the abstract PlatformTyper trait, falling back to pasting if typing fails.",
+      title: "Refine",
+      subtitle: "STAGE 5 // REFINE",
+      desc: "Your dictionary fixes names and terms, and an optional LLM pass cleans up grammar and formatting using the prompt you choose.",
+    },
+    {
+      title: "Type it anywhere",
+      subtitle: "STAGE 6 // TYPE",
+      desc: "The final text is typed straight into the focused window, with a clipboard-paste fallback that restores what you had before.",
     }
   ];
   return { ...layer, ...content[index] };
@@ -87,29 +98,34 @@ export const stepsEn: Step[] = layers.map((layer, index) => {
 export const stepsRu: Step[] = layers.map((layer, index) => {
   const content = [
     {
-      title: "Граница ОС",
-      subtitle: "ЭТАП 1 // ВВОД",
-      desc: "Глобальные хуки через rdev. Фильтрует нажатия по атомарному ключу и отправляет семантические события в ядро Tauri.",
+      title: "Ловим нажатие",
+      subtitle: "ЭТАП 1 // ЗАХВАТ",
+      desc: "Горячую клавишу перехватывает глобальный низкоуровневый хук ОС \u2014 запись стартует мгновенно из любого приложения. На основе rdev.",
     },
     {
-      title: "State Machine",
-      subtitle: "ЭТАП 2 // ЯДРО",
-      desc: "Чистая стейт-машина. Сериализует жизненный цикл записи, делегируя добавление задач в TranscriptionQueue профильным координаторам.",
+      title: "Дирижируем потоком",
+      subtitle: "ЭТАП 2 // КООРДИНАЦИЯ",
+      desc: "Чистая стейт-машина ведёт цикл запись\u2192расшифровка\u2192вывод и ставит каждую запись в очередь, так что диктовки подряд не смешиваются.",
     },
     {
-      title: "Аудио Подсистема",
-      subtitle: "ЭТАП 3 // СЕНСОРЫ",
-      desc: "Низколатентный захват звука через CPAL (с безопасным восстановлением локов). VAD-фильтрация и кодирование WAV выполняются при остановке.",
+      title: "Слушаем и фильтруем",
+      subtitle: "ЭТАП 3 // ПРОСЛУШКА",
+      desc: "Низколатентный захват звука через CPAL, а Silero-детектор речи обрезает тишину \u2014 в облако уходит только реальная речь.",
     },
     {
-      title: "Нейросеть (LPU)",
-      subtitle: "ЭТАП 4 // ОБЛАКО",
-      desc: "Асинхронная отправка аудио на процессоры Groq (или любой кастомный OpenAI endpoint через api_url_override) со строгой типизацией ответов.",
+      title: "Расшифровка",
+      subtitle: "ЭТАП 4 // РАСШИФРОВКА",
+      desc: "Запись уходит на Whisper-совместимый endpoint \u2014 Groq по умолчанию или любой OpenAI-совместимый / свой URL, который вы укажете.",
     },
     {
-      title: "Движок Вывода",
-      subtitle: "ЭТАП 5 // АКТЮАТОР",
-      desc: "Возврат в ОС. Эмуляция нативных нажатий через трейт PlatformTyper с изящным фоллбеком на буфер обмена в случае ошибки ввода.",
+      title: "Шлифуем",
+      subtitle: "ЭТАП 5 // ШЛИФОВКА",
+      desc: "Ваш словарь исправляет имена и термины, а опциональный проход LLM правит грамматику и формат по выбранному вами промпту.",
+    },
+    {
+      title: "Печатаем куда угодно",
+      subtitle: "ЭТАП 6 // ВЫВОД",
+      desc: "Готовый текст печатается прямо в активное окно, с фоллбеком на вставку из буфера, который затем восстанавливает прежнее содержимое.",
     }
   ];
   return { ...layer, ...content[index] };
