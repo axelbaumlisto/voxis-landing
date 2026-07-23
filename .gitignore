@@ -54,3 +54,8 @@ probe.mjs
 shot*.mjs
 capture*.mjs
 capture*.js
+
+# local scratch (dev server pid, tailwind css dump, class probe)
+.pid
+out.css
+test.html
