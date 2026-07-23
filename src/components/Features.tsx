@@ -50,11 +50,11 @@ export default function Features({ lang }: { lang: "en" | "ru" }) {
     <section className="section bg-black relative z-10 border-t border-white/5">
       <Container width="page">
         <SectionHeading title={t.heading} subtitle={t.sub} />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[var(--space-md)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[var(--space-md)] items-stretch">
           {t.items.map((it, i) => {
             const Icon = ICONS[it.icon as keyof typeof ICONS];
             return (
-              <div key={i} className="rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.02] p-[var(--space-lg)] hover:border-[var(--color-accent)]/40 transition-colors duration-300">
+              <div key={i} className="h-full rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.02] p-[var(--space-lg)] hover:border-[var(--color-accent)]/40 transition-colors duration-300">
                 <div className="p-3 rounded-xl bg-black/50 border border-white/10 text-[var(--color-accent)] w-fit mb-[var(--space-md)]">
                   <Icon className="w-6 h-6" />
                 </div>
@@ -68,11 +68,11 @@ export default function Features({ lang }: { lang: "en" | "ru" }) {
         <h3 className="text-center text-[var(--color-muted-2)] text-lg font-semibold mt-[var(--space-2xl)] mb-[var(--space-lg)]">
           {t.powerHeading}
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[var(--space-md)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[var(--space-md)] items-stretch">
           {t.powerItems.map((it, i) => {
             const Icon = ICONS[it.icon as keyof typeof ICONS];
             return (
-              <div key={i} className="rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.02] p-[var(--space-lg)] hover:border-[var(--color-accent)]/40 transition-colors duration-300">
+              <div key={i} className="h-full rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.02] p-[var(--space-lg)] hover:border-[var(--color-accent)]/40 transition-colors duration-300">
                 <div className="p-3 rounded-xl bg-black/50 border border-white/10 text-[var(--color-accent)] w-fit mb-[var(--space-md)]">
                   <Icon className="w-6 h-6" />
                 </div>
