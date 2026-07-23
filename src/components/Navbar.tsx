@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Globe, Cpu, Menu, X } from "lucide-react";
+import { Globe, Ear, Menu, X } from "lucide-react";
 import Link from "next/link";
 import Container from "./ui/Container";
 
@@ -73,7 +73,7 @@ export default function Navbar({ lang, links }: NavbarProps) {
     <header className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ease-out ${scrolled ? "backdrop-blur-md bg-black/60 border-b border-[var(--color-border-subtle)]" : "bg-transparent border-b border-transparent"}`}>
     <Container as="nav" width="page" className="py-[var(--space-md)] flex justify-between items-center">
       <div className="text-2xl font-black tracking-tighter text-white drop-shadow-lg flex items-center gap-2">
-        <Cpu className="w-6 h-6 text-[var(--color-accent)]" /> VOXIS
+        <Ear className="w-6 h-6 text-[var(--color-accent)]" /> VOXIS
       </div>
 
       {/* Desktop */}
