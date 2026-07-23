@@ -2,8 +2,7 @@ import { Apple, MonitorDown, Terminal, KeyRound } from "lucide-react";
 import Container from "./ui/Container";
 import SectionHeading from "./ui/SectionHeading";
 
-const REL = "https://github.com/axelbaumlisto/voxis/releases";
-const DL = `${REL}/latest/download`;
+import { DOWNLOADS, RELEASES_URL as REL } from "../lib/downloads";
 
 export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
   const isRu = lang === "ru";
@@ -48,9 +47,9 @@ export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
       };
 
   const platforms = [
-    { icon: MonitorDown, name: t.win, sub: t.winSub, href: `${DL}/voxis-windows-x64-gui.exe` },
-    { icon: Apple, name: t.mac, sub: t.macSub, href: `${DL}/voxis-macos-arm64` },
-    { icon: Terminal, name: t.linux, sub: t.linuxSub, href: `${DL}/voxis-linux-x64-gui` },
+    { icon: MonitorDown, name: t.win, sub: t.winSub, href: DOWNLOADS.windows.href, file: DOWNLOADS.windows.file },
+    { icon: Apple, name: t.mac, sub: t.macSub, href: DOWNLOADS.macos.href, file: DOWNLOADS.macos.file },
+    { icon: Terminal, name: t.linux, sub: t.linuxSub, href: DOWNLOADS.linux.href, file: DOWNLOADS.linux.file },
   ];
 
   return (
@@ -78,6 +77,7 @@ export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
               <a
                 key={p.name}
                 href={p.href}
+                download={p.file}
                 className="rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.02] p-[var(--space-lg)] flex flex-col items-center text-center gap-[var(--space-2xs)] hover:border-[var(--color-accent)]/40 transition-colors duration-300"
               >
                 <Icon className="w-7 h-7 text-[var(--color-accent)] mb-[var(--space-2xs)]" />

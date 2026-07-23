@@ -1,9 +1,11 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { useState } from "react";
 import { Download, BookOpen } from "lucide-react";
 import Container from "./ui/Container";
 import LavaLampBg from "./LavaLampBg";
+import DownloadDialog from "./DownloadDialog";
 import { DUR, EASE_OUT_EXPO } from "../lib/motion";
 
 interface HeroProps {
@@ -13,10 +15,12 @@ interface HeroProps {
   downloadText: string;
   docsText: string;
   titleClassName?: string;
+  lang: "en" | "ru";
 }
 
-export default function Hero({ badge, title, description, downloadText, docsText, titleClassName = "tracking-tighter" }: HeroProps) {
+export default function Hero({ badge, title, description, downloadText, docsText, titleClassName = "tracking-tighter", lang }: HeroProps) {
   const reduce = useReducedMotion();
+  const [dlOpen, setDlOpen] = useState(false);
   // Progressive enhancement: text is always painted (opacity:1). Only translate for the slide-up.
   const rise = (delay: number) =>
     reduce
@@ -68,14 +72,16 @@ export default function Hero({ badge, title, description, downloadText, docsText
         </motion.p>
 
         <motion.div {...rise(0.15)} className="flex flex-col sm:flex-row gap-[var(--space-sm)]">
-          <a href="https://github.com/axelbaumlisto/voxis/releases" className="btn-base btn-primary">
+          <button type="button" onClick={() => setDlOpen(true)} className="btn-base btn-primary">
             <Download className="w-5 h-5" /> {downloadText}
-          </a>
+          </button>
           <a href="https://docs.voxis.top" className="btn-base btn-secondary">
             <BookOpen className="w-5 h-5" /> {docsText}
           </a>
         </motion.div>
       </Container>
+
+      <DownloadDialog open={dlOpen} onClose={() => setDlOpen(false)} lang={lang} />
     </section>
   );
 }

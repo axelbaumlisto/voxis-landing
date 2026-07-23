@@ -45,7 +45,7 @@ export default function LandingPage({ lang }: { lang: "en" | "ru" }) {
     <MotionConfig reducedMotion="user">
       <main className="min-h-screen relative flex flex-col items-center bg-black w-full">
         <Navbar lang={lang} links={navLinks} />
-        <Hero {...heroProps} />
+        <Hero {...heroProps} lang={lang} />
         <HowItWorks lang={lang} />
         <Architecture steps={isRu ? stepsRu : stepsEn} intl={archIntl} />
         <Features lang={lang} />
