@@ -50,20 +50,23 @@ export default function Navbar({ lang, links }: NavbarProps) {
     </>
   );
 
+  // Each language segment is a full ≥min-h-11 tap target (not just the bare text),
+  // so the mobile control meets the 44px touch-target guidance.
+  const langSegment = "inline-flex min-h-11 items-center justify-center px-2 rounded-full";
   const langSwitch = (
-    <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full border border-[var(--color-border)] backdrop-blur-md">
+    <div className="flex items-center gap-1 bg-white/10 pl-3 pr-1 rounded-full border border-[var(--color-border)] backdrop-blur-md">
       <Globe className="w-4 h-4 text-[var(--color-muted)]" />
       {lang === "en" ? (
         <>
-          <span className="text-white font-bold">EN</span>
+          <span className={`${langSegment} text-white font-bold`} aria-current="true">EN</span>
           <span className="text-[var(--color-muted-3)]" aria-hidden="true">|</span>
-          <Link href="/ru" className="hover:text-[var(--color-accent)] transition-colors">RU</Link>
+          <Link href="/ru" aria-label="Сменить язык на русский" className={`${langSegment} hover:text-[var(--color-accent)] transition-colors`}>RU</Link>
         </>
       ) : (
         <>
-          <Link href="/" className="hover:text-[var(--color-accent)] transition-colors">EN</Link>
+          <Link href="/" aria-label="Switch language to English" className={`${langSegment} hover:text-[var(--color-accent)] transition-colors`}>EN</Link>
           <span className="text-[var(--color-muted-3)]" aria-hidden="true">|</span>
-          <span className="text-white font-bold">RU</span>
+          <span className={`${langSegment} text-white font-bold`} aria-current="true">RU</span>
         </>
       )}
     </div>

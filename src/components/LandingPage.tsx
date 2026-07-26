@@ -38,8 +38,20 @@ export default function LandingPage({ lang }: { lang: "en" | "ru" }) {
       };
 
   const archIntl = isRu
-    ? { title: "Архитектура системы", subtitle: "SOLID-архитектура на Rust" }
-    : { title: "System Architecture", subtitle: "SOLID Rust Architecture" };
+    ? {
+        title: "Архитектура системы",
+        subtitle: "SOLID-архитектура на Rust",
+        pipelineLabel: "Пайплайн",
+        pathTitle: "Один чёткий путь",
+        stagesLabel: (n: number) => `${n} этапов`,
+      }
+    : {
+        title: "System Architecture",
+        subtitle: "SOLID Rust Architecture",
+        pipelineLabel: "Pipeline",
+        pathTitle: "One clean path",
+        stagesLabel: (n: number) => `${n} stages`,
+      };
 
   return (
     <MotionConfig reducedMotion="user">

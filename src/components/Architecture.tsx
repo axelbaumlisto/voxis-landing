@@ -9,6 +9,10 @@ import { DUR, EASE_OUT_EXPO } from "../lib/motion";
 export interface ArchIntl {
   title: string;
   subtitle: string;
+  pipelineLabel: string;
+  pathTitle: string;
+  /** Formats the stage-count badge, e.g. (6) => "6 stages" / "6 этапов". */
+  stagesLabel: (n: number) => string;
 }
 
 interface ArchitectureProps {
@@ -75,11 +79,11 @@ function ArchitectureDashboard({ steps, intl }: { steps: Step[]; intl: ArchIntl 
           <div className="relative z-10 h-full p-7 lg:p-8 flex flex-col">
             <div className="flex items-center justify-between gap-4 mb-8">
               <div>
-                <div className="text-xs font-mono uppercase tracking-[0.22em] text-[var(--color-accent)] font-bold mb-2">Pipeline</div>
-                <div className="text-2xl font-extrabold text-white tracking-tight">One clean path</div>
+                <div className="text-xs font-mono uppercase tracking-[0.22em] text-[var(--color-accent)] font-bold mb-2">{intl.pipelineLabel}</div>
+                <div className="text-2xl font-extrabold text-white tracking-tight">{intl.pathTitle}</div>
               </div>
               <div className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-mono text-zinc-400">
-                {steps.length} stages
+                {intl.stagesLabel(steps.length)}
               </div>
             </div>
 
