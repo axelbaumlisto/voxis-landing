@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Mic, Zap, Brain, Keyboard, Terminal, Cpu, Sparkles } from "lucide-react";
 import type { Step, IconKey } from "../data/architecture";
 import { useMediaQuery } from "../hooks/useMediaQuery";
@@ -27,251 +26,149 @@ const IconMap: Record<IconKey, React.ComponentType<{ className?: string }>> = {
   sparkles: Sparkles,
 };
 
-const SPREAD = 620;
-const FOCUS_POP = 80;
-const EPSILON = 0.4;
-
-function BoardLayer({
-  step,
-  index,
-  scrollYProgress,
-  active,
-  stepCount,
-}: {
-  step: Step;
-  index: number;
-  scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"];
-  active: number;
-  stepCount: number;
-}) {
-  const i = index;
-  const Icon = IconMap[step.iconName];
-  const isActive = i === active;
-
-  const currentZ = useTransform(scrollYProgress, (p) => {
-    // Peek from frame one: all 5 layers already spread. Scroll moves focus (fly),
-    // not "explode from compacted chip". No global camera offset — the stack is
-    // pre-arranged for hero-peek visibility.
-    const fly = p * (stepCount - 0.01);
-    const distance = i - fly;
-    const baseDepth = distance * -SPREAD;
-    const pop = Math.abs(distance) < EPSILON ? FOCUS_POP * (1 - Math.abs(distance) / EPSILON) : 0;
-    return baseDepth + pop;
-  });
-
-  const opacity = useTransform(
-    currentZ,
-    [-3200, -1600, -700, 0, 180, 420],
-    [0.08,   0.28,  0.65, 1, 0.18, 0.06],
-    { clamp: true }
-  );
-
-  const blurValue = useTransform(
-    currentZ,
-    [-2000, -500, 0, 200, 500],
-    ["blur(12px)", "blur(4px)", "blur(0px)", "blur(0px)", "blur(8px)"]
-  );
-
-  return (
-    <motion.div
-      style={{
-        translateZ: currentZ,
-        opacity,
-        filter: blurValue,
-        transformStyle: "preserve-3d",
-      }}
-      className={`absolute inset-0 rounded-[var(--glass-radius-lg)] border flex items-center justify-center transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-expo)]
-        ${isActive ? step.glow + " bg-black/95 shadow-[0_30px_60px_rgba(0,0,0,0.8)]" : 'border-white/5 bg-zinc-950/80 shadow-[0_10px_30px_rgba(0,0,0,0.5)]'}
-      `}
-    >
-      <div className="absolute inset-0 pcb-grid opacity-20 rounded-[var(--glass-radius-lg)]"></div>
-
-      <motion.svg 
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-60" 
-        viewBox="0 0 500 500"
-      >
-        <defs>
-          <marker id={`arrow-${i}`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill={step.hex} />
-          </marker>
-        </defs>
-        <path d="M 250 100 L 250 170" stroke={step.hex} strokeWidth="3" strokeDasharray="6 6" markerEnd={`url(#arrow-${i})`} />
-        <path d="M 250 330 L 250 400" stroke={step.hex} strokeWidth="3" strokeDasharray="6 6" markerEnd={`url(#arrow-${i})`} />
-        <path d="M 100 250 L 140 250" stroke={step.hex} strokeWidth="2" opacity="0.5" />
-        <path d="M 360 250 L 400 250" stroke={step.hex} strokeWidth="2" opacity="0.5" />
-        <circle cx="250" cy="100" r="4" fill={step.hex} />
-        <circle cx="250" cy="400" r="4" fill={step.hex} />
-      </motion.svg>
-
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <motion.div className="w-32 h-8 bg-white/5 border border-white/10 rounded-md flex items-center justify-center text-[10px] font-mono text-zinc-500 mb-8 shadow-inner">
-          Input I/O
-        </motion.div>
-
-        <div className="flex items-center gap-8 relative z-10">
-          <motion.div className="w-12 h-32 bg-white/5 border border-white/10 rounded-md shadow-inner"></motion.div>
-
-          <div className={`w-56 h-56 border-2 ${isActive ? step.glow : 'border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)]'} bg-[var(--color-surface-2)] rounded-[var(--glass-radius)] flex flex-col items-center justify-center relative transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-expo)]`}>
-            {["top-3 left-3", "top-3 right-3", "bottom-3 left-3", "bottom-3 right-3"].map((pos) => (
-              <div key={pos} className={`absolute ${pos} w-2 h-2 rounded-full bg-zinc-800`} aria-hidden="true" />
-            ))}
-            
-            <div className={`p-4 rounded-2xl bg-black border border-white/10 mb-4 shadow-inner ${step.iconColor}`}>
-              {Icon && <Icon className="w-12 h-12" />}
-            </div>
-            <motion.div className="text-xs font-mono text-white tracking-widest text-center px-4">
-              {step.className}
-            </motion.div>
-          </div>
-
-          <motion.div className="w-12 h-32 bg-white/5 border border-white/10 rounded-md shadow-inner"></motion.div>
-        </div>
-
-        <motion.div className="w-32 h-8 bg-white/5 border border-white/10 rounded-md flex items-center justify-center text-[10px] font-mono text-zinc-500 mt-8 shadow-inner">
-          Output I/O
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-}
-
 export default function Architecture({ steps, intl }: ArchitectureProps) {
-  const containerRef = useRef(null);
-  const [active, setActive] = useState(0);
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  // SSR-safe reduced-motion (useReducedMotion from framer is NOT SSR-safe for structural className → hydration mismatch).
-  // useMediaQuery uses useSyncExternalStore with getServerSnapshot=false, so server and first client render agree.
+  // SSR-safe reduced-motion guard: desktop gets the composed dashboard, while
+  // reduced-motion keeps the simpler always-visible stack.
   const reduce = useMediaQuery("(prefers-reduced-motion: reduce)");
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const f = latest * (steps.length - 0.01);
-    setActive(Math.min(steps.length - 1, Math.max(0, Math.floor(f))));
-  });
-
   return (
-    <section id="architecture" ref={containerRef} className={`relative w-full bg-black ${reduce ? "" : "md:h-[288vh]"}`}>
-      {/* MOBILE + reduced-motion fallback: always-visible bento stack */}
-      <div className={reduce ? "block" : "md:hidden"}>
+    <section id="architecture" className="relative w-full scroll-mt-24 md:scroll-mt-28 bg-black py-[var(--space-2xl)] md:py-[var(--space-5xl)] overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(34,211,238,0.12),transparent_34%),linear-gradient(180deg,rgba(9,9,11,0.45),#000_70%)]" aria-hidden />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" aria-hidden />
+
+      <div className={reduce ? "relative z-10 block" : "relative z-10 block md:hidden"}>
         <BentoStack steps={steps} intl={intl} />
       </div>
 
-      {/* DESKTOP 3D fly-through (skipped for reduced-motion) */}
       {isDesktop && !reduce && (
-        <div className="hidden md:flex sticky top-0 h-screen w-full flex-col overflow-hidden px-10 lg:px-20 bg-gradient-to-b from-[var(--color-surface-2)] to-[var(--color-surface)]">
-          {/* Section heading — in-flow at top so the 3D content starts directly beneath it */}
-          <div className="pt-[var(--space-4xl)] pb-[var(--space-md)] text-center z-40 pointer-events-none shrink-0">
-            <h2 className="text-[length:var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)] font-extrabold text-white">
-              {intl.title}
-            </h2>
-            <p className="text-sm md:text-base uppercase tracking-widest text-[var(--color-muted-3)] mt-2 font-mono">
-              {intl.subtitle}
-            </p>
-          </div>
-
-          {/* 3D row fills the space right under the heading */}
-          <div className="flex-1 flex flex-row items-center justify-center w-full min-h-0">
-          {/* Left Side: Info Glass */}
-          <div className="w-1/2 flex flex-col items-center justify-center z-30 h-full relative">
-            <div className="w-full max-w-lg relative">
-              
-              <AnimatePresence mode="popLayout" initial={false}>
-                {steps.map((step, i) => {
-                  const Icon = IconMap[step.iconName];
-
-                  return i === active && (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: -30, filter: "blur(10px)" }}
-                      animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                      exit={{ opacity: 0, x: -30, filter: "blur(10px)" }}
-                      transition={{ duration: DUR.base, ease: EASE_OUT_EXPO }}
-                      className={`absolute top-1/2 -translate-y-1/2 w-full bg-black/40 backdrop-blur-3xl rounded-[var(--glass-radius-lg)] border border-white/10 ${step.glow.replace('shadow-', 'shadow-2xl shadow-')} overflow-hidden`}
-                    >
-                      <div className="p-10 relative">
-                         <div className="absolute inset-0 pcb-grid opacity-5"></div>
-                         <div className="relative z-10">
-                           <div className="flex items-center gap-4 mb-6">
-                              <div className={`p-4 rounded-2xl bg-black/80 border border-white/10 shadow-inner ${step.iconColor}`}>
-                                {Icon && <Icon className="w-8 h-8" />}
-                              </div>
-                              <div>
-                                <div className="text-xs font-mono font-bold tracking-widest uppercase mb-2" style={{ color: step.hex }}>
-                                  {step.subtitle}
-                                </div>
-                                <h3 className="text-[length:var(--text-h2)] leading-[var(--text-h2--line-height)] font-extrabold text-white">
-                                  {step.title}
-                                </h3>
-                              </div>
-                           </div>
-                           
-                           <p className="text-zinc-300 text-lg leading-relaxed font-light mb-[var(--space-md)]">
-                             {step.desc}
-                           </p>
-                           
-                           <div className={`pill-code w-full ${step.iconColor}`}>
-                             <span className="pill-code__type" title={step.className}>{step.className}</span>
-                             <span className="pill-code__path" title={step.filePath}>
-                               {step.filePath.split("/").pop()}
-                             </span>
-                           </div>
-                         </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
-            </div>
-          </div>
-
-          {/* Right Side: The Exploding 3D Chip Stack */}
-          <div className="w-1/2 h-full flex items-center justify-center perspective-[2500px] z-10">
-            <motion.div
-              className="relative w-[500px] h-[500px]"
-              style={{
-                transform: "rotateX(60deg) rotateZ(-45deg)",
-                transformStyle: "preserve-3d",
-              }}
-            >
-              {steps.map((step, i) => (
-                <BoardLayer
-                  key={i}
-                  step={step}
-                  index={i}
-                  scrollYProgress={scrollYProgress}
-                  active={active}
-                  stepCount={steps.length}
-                />
-              ))}
-            </motion.div>
-          </div>
-          </div>
-
-          {/* Progress stepper — active step out of total, pinned bottom */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 z-40" aria-hidden>
-            {steps.map((_, i) => (
-              <span
-                key={i}
-                className={`h-1 rounded-full transition-[width,background-color] duration-300 ease-[var(--ease-out-expo)] ${
-                  i === active ? "w-10 bg-white" : "w-4 bg-white/20"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
+        <ArchitectureDashboard steps={steps} intl={intl} />
       )}
     </section>
   );
 }
 
+function ArchitectureDashboard({ steps, intl }: { steps: Step[]; intl: ArchIntl }) {
+  return (
+    <div className="relative z-10 mx-auto w-full max-w-[1180px] px-6 lg:px-10">
+      <div className="text-center mb-[var(--space-2xl)]">
+        <p className="text-xs md:text-sm uppercase tracking-[0.28em] text-[var(--color-muted-3)] font-mono mb-3">
+          {intl.subtitle}
+        </p>
+        <h2 className="text-[length:var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)] font-extrabold text-white">
+          {intl.title}
+        </h2>
+      </div>
+
+      <div className="grid lg:grid-cols-[0.92fr_1.08fr] gap-6 lg:gap-8 items-stretch">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: DUR.base, ease: EASE_OUT_EXPO }}
+          className="relative min-h-[620px] rounded-[var(--glass-radius-lg)] border border-[var(--color-accent)]/35 bg-black/55 shadow-[0_0_90px_rgba(34,211,238,0.14)] overflow-hidden"
+        >
+          <div className="absolute inset-0 pcb-grid opacity-[0.07]" aria-hidden />
+          <div className="absolute -top-28 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[var(--color-accent)]/18 blur-3xl" aria-hidden />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/[0.045] via-transparent to-black/40" aria-hidden />
+
+          <div className="relative z-10 h-full p-7 lg:p-8 flex flex-col">
+            <div className="flex items-center justify-between gap-4 mb-8">
+              <div>
+                <div className="text-xs font-mono uppercase tracking-[0.22em] text-[var(--color-accent)] font-bold mb-2">Pipeline</div>
+                <div className="text-2xl font-extrabold text-white tracking-tight">One clean path</div>
+              </div>
+              <div className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-mono text-zinc-400">
+                {steps.length} stages
+              </div>
+            </div>
+
+            <div className="relative flex-1 rounded-[var(--glass-radius)] border border-white/10 bg-black/35 p-5 overflow-hidden">
+              <div className="absolute left-[29px] top-12 bottom-12 w-px bg-gradient-to-b from-[var(--color-accent)]/0 via-[var(--color-accent)]/50 to-[var(--color-accent)]/0" aria-hidden />
+              <div className="relative z-10 grid h-full grid-rows-6 gap-3">
+                {steps.map((step, i) => {
+                  const Icon = IconMap[step.iconName];
+                  return (
+                    <motion.div
+                      key={step.className}
+                      initial={{ opacity: 0, x: -18 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: DUR.fast, delay: i * 0.035, ease: EASE_OUT_EXPO }}
+                      className="grid grid-cols-[48px_1fr] gap-3 items-center min-h-0"
+                    >
+                      <div className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--color-accent)]/35 bg-[var(--color-accent)]/10 text-[var(--color-accent)] shadow-[0_0_24px_rgba(34,211,238,0.16)]">
+                        {Icon && <Icon className="h-4 w-4" />}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-[9px] font-mono uppercase tracking-[0.16em] text-[var(--color-accent)]/85 font-bold mb-0.5 truncate">
+                          {step.subtitle}
+                        </div>
+                        <div className="text-sm font-extrabold text-white truncate">{step.title}</div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="grid sm:grid-cols-2 gap-4">
+          {steps.map((step, i) => (
+            <StageCard key={step.className} step={step} index={i} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StageCard({ step, index }: { step: Step; index: number }) {
+  const Icon = IconMap[step.iconName];
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: DUR.base, delay: index * 0.035, ease: EASE_OUT_EXPO }}
+      className="group relative min-h-[198px] rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.025] overflow-hidden shadow-[0_18px_60px_rgba(0,0,0,0.38)]"
+    >
+      <div className="absolute inset-0 pcb-grid opacity-[0.055]" aria-hidden />
+      <div className="absolute -top-20 right-0 h-40 w-40 rounded-full bg-[var(--color-accent)]/10 blur-3xl transition-opacity duration-300 group-hover:opacity-100 opacity-70" aria-hidden />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent)]/45 to-transparent" aria-hidden />
+
+      <div className="relative z-10 p-5 lg:p-6 h-full flex flex-col">
+        <div className="flex items-start gap-4 mb-4">
+          <div className="shrink-0 rounded-2xl border border-[var(--color-accent)]/30 bg-[var(--color-accent)]/10 p-3 text-[var(--color-accent)] shadow-[0_0_26px_rgba(34,211,238,0.14)]">
+            {Icon && <Icon className="h-6 w-6" />}
+          </div>
+          <div className="min-w-0">
+            <div className="text-[10px] font-mono uppercase tracking-[0.18em] text-[var(--color-accent)]/85 font-bold mb-1">
+              {step.subtitle}
+            </div>
+            <h3 className="text-lg font-extrabold text-white tracking-tight leading-tight">{step.title}</h3>
+          </div>
+        </div>
+
+        <p className="text-sm leading-relaxed text-zinc-300 font-light mb-5 line-clamp-3">
+          {step.desc}
+        </p>
+
+        <div className={`pill-code w-full mt-auto ${step.iconColor}`}>
+          <span className="pill-code__type" title={step.className}>{step.className}</span>
+          <span className="pill-code__path" title={step.filePath}>{step.filePath.split("/").pop()}</span>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
 function BentoStack({ steps, intl }: { steps: Step[]; intl: ArchIntl }) {
   return (
-    <div className="flex flex-col items-center justify-center px-4 py-[var(--space-2xl)] md:py-[var(--space-3xl)] gap-8">
-      <div className="text-center mb-8">
+    <div className="flex flex-col items-center justify-center px-4 py-0 md:py-[var(--space-3xl)] gap-8">
+      <div className="text-center mb-4 md:mb-8">
         <h2 className="text-[length:var(--text-h1)] leading-[var(--text-h1--line-height)] tracking-[var(--text-h1--letter-spacing)] font-extrabold text-white">{intl.title}</h2>
         <p className="text-zinc-400 mt-2">{intl.subtitle}</p>
       </div>
