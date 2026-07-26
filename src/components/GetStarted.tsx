@@ -2,7 +2,7 @@ import { Apple, MonitorDown, Terminal, KeyRound } from "lucide-react";
 import Container from "./ui/Container";
 import SectionHeading from "./ui/SectionHeading";
 
-import { DOWNLOADS, RELEASES_URL as REL } from "../lib/downloads";
+import { DOWNLOADS, GROQ_KEYS_URL, LATEST_VERSION, RELEASES_URL as REL, REPO_URL, SELF_HOSTED_DOCS_URL } from "../lib/downloads";
 
 export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
   const isRu = lang === "ru";
@@ -16,7 +16,12 @@ export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
           "Зажмите горячую клавишу и говорите — текст появится под курсором.",
         ],
         keyNote:
-          "Свой ключ: по умолчанию бесплатный тариф Groq, либо любой OpenAI-совместимый / self-hosted endpoint. Ваше аудио не проходит через наши серверы.",
+          "Свой ключ: по умолчанию бесплатный тариф Groq, либо любой OpenAI-совместимый / self-hosted endpoint. Аудио идёт напрямую туда — не через серверы Voxis.",
+        trust: `${LATEST_VERSION} · MIT open source · GitHub Releases`,
+        signing: "Ранние сборки могут показывать предупреждения ОС, пока подпись и notarization финализируются.",
+        groq: "Получить Groq key",
+        selfhost: "Self-host инструкция",
+        source: "Исходный код",
         req: "Требования: macOS 12+ (Apple Silicon), Windows 10+, современный Linux. Микрофон + интернет для облачной транскрипции.",
         win: "Windows",
         mac: "macOS (Apple Silicon)",
@@ -35,7 +40,12 @@ export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
           "Hold your hotkey and speak — text appears where your cursor is.",
         ],
         keyNote:
-          "Bring your own key: the free Groq tier by default, or any OpenAI-compatible / self-hosted endpoint. Your audio never touches our servers.",
+          "Bring your own key: the free Groq tier by default, or any OpenAI-compatible / self-hosted endpoint. Audio goes directly there — not through Voxis servers.",
+        trust: `${LATEST_VERSION} · MIT open source · GitHub Releases`,
+        signing: "Early builds may show OS security warnings while signing and notarization are finalized.",
+        groq: "Get a Groq key",
+        selfhost: "Self-host setup",
+        source: "Source",
         req: "Requirements: macOS 12+ (Apple Silicon), Windows 10+, modern Linux. Microphone + internet for cloud transcription.",
         win: "Windows",
         mac: "macOS (Apple Silicon)",
@@ -53,7 +63,7 @@ export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
   ];
 
   return (
-    <section className="section bg-black relative z-10 border-t border-white/5">
+    <section id="get-started" className="section scroll-mt-24 md:scroll-mt-28 bg-black relative z-10 border-t border-white/5">
       <Container width="page">
         <SectionHeading title={t.heading} subtitle={t.sub} />
 
@@ -69,6 +79,25 @@ export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
           ))}
         </ol>
 
+        {/* Trust + provider expectation before direct binary links */}
+        <div className="mb-[var(--space-xl)] max-w-[var(--container-content)] mx-auto flex flex-col gap-[var(--space-sm)]">
+          <div className="text-center">
+            <div className="inline-block rounded-xl border border-[var(--color-accent)]/20 bg-[var(--color-accent)]/5 px-[var(--space-md)] py-2 text-xs text-zinc-300">
+              {t.trust}
+            </div>
+          </div>
+          <p className="flex gap-[var(--space-sm)] text-zinc-400 text-sm leading-relaxed">
+            <KeyRound className="w-5 h-5 text-[var(--color-accent)] shrink-0 mt-0.5" aria-hidden />
+            <span>{t.keyNote}</span>
+          </p>
+          <div className="pl-[calc(1.25rem+var(--space-sm))] flex flex-wrap gap-x-3 gap-y-1 text-sm">
+            <a href={GROQ_KEYS_URL} target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:underline">{t.groq}</a>
+            <a href={SELF_HOSTED_DOCS_URL} target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:underline">{t.selfhost}</a>
+            <a href={REPO_URL} target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:underline">{t.source}</a>
+          </div>
+          <p className="text-zinc-500 text-xs leading-relaxed pl-[calc(1.25rem+var(--space-sm))]">{t.signing}</p>
+        </div>
+
         {/* Per-platform download cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-[var(--space-md)]">
           {platforms.map((p) => {
@@ -78,7 +107,7 @@ export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
                 key={p.name}
                 href={p.href}
                 download={p.file}
-                className="rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.02] p-[var(--space-lg)] flex flex-col items-center text-center gap-[var(--space-2xs)] hover:border-[var(--color-accent)]/40 transition-colors duration-300"
+                className="rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.02] p-[var(--space-lg)] flex flex-col items-center text-center gap-[var(--space-2xs)] hover:border-[var(--color-accent)]/60 hover:shadow-[0_0_40px_rgba(34,211,238,0.10)] transition-[border-color,box-shadow] duration-300"
               >
                 <Icon className="w-7 h-7 text-[var(--color-accent)] mb-[var(--space-2xs)]" />
                 <span className="text-white font-bold">{p.name}</span>
@@ -101,14 +130,9 @@ export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
           </a>
         </p>
 
-        {/* Key model + requirements */}
-        <div className="mt-[var(--space-2xl)] max-w-[var(--container-content)] mx-auto flex flex-col gap-[var(--space-sm)]">
-          <p className="flex gap-[var(--space-sm)] text-zinc-400 text-sm leading-relaxed">
-            <KeyRound className="w-5 h-5 text-[var(--color-accent)] shrink-0 mt-0.5" aria-hidden />
-            <span>{t.keyNote}</span>
-          </p>
-          <p className="text-zinc-500 text-xs leading-relaxed pl-[calc(1.25rem+var(--space-sm))]">{t.req}</p>
-        </div>
+        <p className="mt-[var(--space-lg)] max-w-[var(--container-content)] mx-auto text-zinc-500 text-xs leading-relaxed text-center">
+          {t.req}
+        </p>
       </Container>
     </section>
   );

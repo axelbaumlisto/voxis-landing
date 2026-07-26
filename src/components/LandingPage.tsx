@@ -17,24 +17,26 @@ export default function LandingPage({ lang }: { lang: "en" | "ru" }) {
   const isRu = lang === "ru";
   
   const navLinks = isRu
-    ? { architecture: "Архитектура", docs: "Документация", github: "GitHub" }
-    : { architecture: "Architecture", docs: "Documentation", github: "GitHub" };
+    ? { architecture: "Архитектура", download: "Скачать", docs: "Документация", github: "GitHub" }
+    : { architecture: "Architecture", download: "Download", docs: "Documentation", github: "GitHub" };
 
   const heroProps = isRu
     ? {
         badge: "Tauri v2 + Ядро на Rust",
         title: <>Диктуй код. <br /> Пиши со скоростью мысли.</>,
-        description: "Абсолютно приватный, молниеносный десктопный движок для диктовки.",
-        downloadText: "Скачать (Win/Mac/Linux)",
+        description: "Приватная по дизайну десктопная диктовка: аудио идёт напрямую в ваш Whisper endpoint — без аккаунта Voxis, прокси и телеметрии.",
+        downloadText: "Скачать бесплатно",
         docsText: "Документация",
+        trustItems: ["MIT open source", "Свой Groq-ключ или self-host", "Windows / macOS / Linux"],
         titleClassName: "tracking-tight",
       }
     : {
         badge: "Tauri v2 + Rust Core",
         title: <>Speak your code. <br /> Write at lightspeed.</>,
-        description: "A completely private, blazing fast desktop dictation engine.",
-        downloadText: "Download Latest",
+        description: "Private-by-design desktop dictation: audio goes directly to your Whisper endpoint — no Voxis account, proxy, or telemetry.",
+        downloadText: "Download free",
         docsText: "Read Docs",
+        trustItems: ["MIT open source", "Bring your own Groq key or self-host", "Windows / macOS / Linux"],
       };
 
   const archIntl = isRu
@@ -59,12 +61,12 @@ export default function LandingPage({ lang }: { lang: "en" | "ru" }) {
         <Navbar lang={lang} links={navLinks} />
         <Hero {...heroProps} lang={lang} />
         <HowItWorks lang={lang} />
-        <Architecture steps={isRu ? stepsRu : stepsEn} intl={archIntl} />
         <Features lang={lang} />
         <Showcase lang={lang} />
         <GetStarted lang={lang} />
         <DownloadCta lang={lang} />
         <Faq lang={lang} />
+        <Architecture steps={isRu ? stepsRu : stepsEn} intl={archIntl} />
         <Footer lang={lang} />
       </main>
     </MotionConfig>

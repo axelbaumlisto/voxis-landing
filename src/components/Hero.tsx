@@ -14,11 +14,12 @@ interface HeroProps {
   description: string;
   downloadText: string;
   docsText: string;
+  trustItems?: string[];
   titleClassName?: string;
   lang: "en" | "ru";
 }
 
-export default function Hero({ badge, title, description, downloadText, docsText, titleClassName = "tracking-tighter", lang }: HeroProps) {
+export default function Hero({ badge, title, description, downloadText, docsText, trustItems = [], titleClassName = "tracking-tighter", lang }: HeroProps) {
   const reduce = useReducedMotion();
   const [dlOpen, setDlOpen] = useState(false);
   // Progressive enhancement: text is always painted (opacity:1). Only translate for the slide-up.
@@ -79,6 +80,16 @@ export default function Hero({ badge, title, description, downloadText, docsText
             <BookOpen className="w-5 h-5" /> {docsText}
           </a>
         </motion.div>
+
+        {trustItems.length > 0 && (
+          <motion.div {...rise(0.2)} className="mt-[var(--space-md)] flex flex-wrap justify-center gap-2 text-xs text-zinc-300">
+            {trustItems.map((item) => (
+              <span key={item} className="rounded-full border border-white/10 bg-black/35 px-3 py-1.5 backdrop-blur-sm">
+                {item}
+              </span>
+            ))}
+          </motion.div>
+        )}
       </Container>
 
       <DownloadDialog open={dlOpen} onClose={() => setDlOpen(false)} lang={lang} />

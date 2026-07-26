@@ -128,8 +128,13 @@ function ArchitectureDashboard({ steps, intl }: { steps: Step[]; intl: ArchIntl 
   );
 }
 
+function shortClassName(className: string): string {
+  return className.split("::").pop() ?? className;
+}
+
 function StageCard({ step, index }: { step: Step; index: number }) {
   const Icon = IconMap[step.iconName];
+  const displayClass = shortClassName(step.className);
 
   return (
     <motion.article
@@ -137,7 +142,7 @@ function StageCard({ step, index }: { step: Step; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: DUR.base, delay: index * 0.035, ease: EASE_OUT_EXPO }}
-      className="group relative min-h-[198px] rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.025] overflow-hidden shadow-[0_18px_60px_rgba(0,0,0,0.38)]"
+      className="group relative min-h-[224px] rounded-[var(--glass-radius)] border border-white/10 bg-white/[0.025] overflow-hidden shadow-[0_18px_60px_rgba(0,0,0,0.38)]"
     >
       <div className="absolute inset-0 pcb-grid opacity-[0.055]" aria-hidden />
       <div className="absolute -top-20 right-0 h-40 w-40 rounded-full bg-[var(--color-accent)]/10 blur-3xl transition-opacity duration-300 group-hover:opacity-100 opacity-70" aria-hidden />
@@ -156,12 +161,12 @@ function StageCard({ step, index }: { step: Step; index: number }) {
           </div>
         </div>
 
-        <p className="text-sm leading-relaxed text-zinc-300 font-light mb-5 line-clamp-3">
+        <p className="text-sm leading-relaxed text-zinc-300 font-light mb-5 lg:line-clamp-4">
           {step.desc}
         </p>
 
         <div className={`pill-code w-full mt-auto ${step.iconColor}`}>
-          <span className="pill-code__type" title={step.className}>{step.className}</span>
+          <span className="pill-code__type" title={step.className}>{displayClass}</span>
           <span className="pill-code__path" title={step.filePath}>{step.filePath.split("/").pop()}</span>
         </div>
       </div>

@@ -7,7 +7,7 @@ import Container from "./ui/Container";
 
 interface NavbarProps {
   lang: "en" | "ru";
-  links: { architecture: string; docs: string; github: string };
+  links: { architecture: string; download: string; docs: string; github: string };
 }
 
 export default function Navbar({ lang, links }: NavbarProps) {
@@ -44,9 +44,10 @@ export default function Navbar({ lang, links }: NavbarProps) {
 
   const navItems = (
     <>
-      <a href="#architecture" onClick={() => setOpen(false)} className="block py-3 hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.architecture}</a>
+      <a href="#get-started" onClick={() => setOpen(false)} className="block py-3 hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.download}</a>
       <a href="https://docs.voxis.top" className="block py-3 hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.docs}</a>
       <a href="https://github.com/axelbaumlisto/voxis" className="block py-3 hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.github}</a>
+      <a href="#architecture" onClick={() => setOpen(false)} className="block py-3 hover:text-[var(--color-accent)] transition-colors duration-200 ease-out">{links.architecture}</a>
     </>
   );
 

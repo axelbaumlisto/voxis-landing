@@ -5,8 +5,11 @@
 // /releases/latest/download/<asset> redirect, so they never need bumping per
 // release. Versioned installers (deb/rpm/NSIS) embed the version, so those live
 // on the general releases page ("more options").
+export const LATEST_VERSION = "v0.1.1";
 export const RELEASES_URL = "https://github.com/axelbaumlisto/voxis/releases";
 export const REPO_URL = "https://github.com/axelbaumlisto/voxis";
+export const GROQ_KEYS_URL = "https://console.groq.com/keys";
+export const SELF_HOSTED_DOCS_URL = "https://docs.voxis.top/self-hosted-transcription.html";
 const DL = `${RELEASES_URL}/latest/download`;
 
 export type PlatformKey = "windows" | "macos" | "linux";

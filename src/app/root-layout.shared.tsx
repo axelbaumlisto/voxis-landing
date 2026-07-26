@@ -16,8 +16,8 @@ export function buildMetadata(lang: "en" | "ru"): Metadata {
   const isRu = lang === "ru";
   const title = isRu ? "Voxis — Диктуй код. Пиши со скоростью мысли." : "Voxis — Speak your code. Write at lightspeed.";
   const description = isRu
-    ? "Абсолютно приватный, молниеносный десктопный движок для диктовки на Tauri v2, Rust и Whisper AI."
-    : "A completely private, blazing fast desktop voice dictation engine built with Tauri v2, Rust, and Whisper AI.";
+    ? "Приватная по дизайну десктопная диктовка: аудио идёт напрямую в ваш Whisper endpoint — без аккаунта Voxis, прокси и телеметрии."
+    : "Private-by-design desktop dictation: audio goes directly to your Whisper endpoint — no Voxis account, proxy, or telemetry.";
   const canonical = isRu ? "https://voxis.top/ru" : "https://voxis.top";
   return {
     title,
@@ -44,8 +44,8 @@ export function buildMetadata(lang: "en" | "ru"): Metadata {
       card: "summary_large_image",
       title: isRu ? "Voxis — Диктуй код" : "Voxis — Speak your code",
       description: isRu
-        ? "Абсолютно приватный, молниеносный десктопный движок для диктовки."
-        : "A completely private, blazing fast desktop voice dictation engine.",
+        ? "Приватная по дизайну десктопная диктовка без аккаунта Voxis, прокси и телеметрии."
+        : "Private-by-design desktop dictation with no Voxis account, proxy, or telemetry.",
       images: ["https://voxis.top/opengraph-image"],
     },
   };
