@@ -29,10 +29,10 @@ export default function Showcase({ lang }: { lang: "en" | "ru" }) {
         dictionaryD: "Replacement rules and learning suggestions, on-device.",
       };
 
-  // Real app screenshots (public/screenshots/*.png). All are ~16:9 so
-  // object-cover fills the aspect-video tile with no distortion.
+  // Real app visuals (public/screenshots/*). All are ~16:9 so object-cover
+  // fills the aspect-video tile with no distortion.
   const shots = [
-    { src: "/screenshots/overlay-theme.png", cap: t.overlay, desc: t.overlayD, alt: isRu ? "Оверлей записи Voxis" : "Voxis recording overlay" },
+    { src: "/screenshots/bubble3d.gif", cap: t.overlay, desc: t.overlayD, alt: isRu ? "3D-оверлей записи Voxis" : "Voxis 3D recording overlay" },
     { src: "/screenshots/history.png", cap: t.history, desc: t.historyD, alt: isRu ? "История транскрипций Voxis" : "Voxis transcription history" },
     { src: "/screenshots/settings.png", cap: t.settings, desc: t.settingsD, alt: isRu ? "Настройки Voxis" : "Voxis settings" },
     { src: "/screenshots/dictionary.png", cap: t.dictionary, desc: t.dictionaryD, alt: isRu ? "Словарь замен Voxis" : "Voxis replacement dictionary" },
