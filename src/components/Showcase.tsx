@@ -53,8 +53,8 @@ export default function Showcase({ lang }: { lang: "en" | "ru" }) {
                 <img
                   src={shot.src}
                   alt={shot.alt}
-                  width={1280}
-                  height={720}
+                  width={640}
+                  height={360}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover"
@@ -62,7 +62,7 @@ export default function Showcase({ lang }: { lang: "en" | "ru" }) {
               </div>
               <figcaption className="p-[var(--space-sm)] text-center">
                 <span className="block text-sm font-semibold text-white">{shot.cap}</span>
-                <span className="block text-xs text-zinc-500 mt-1 leading-relaxed">{shot.desc}</span>
+                <span className="block text-xs text-zinc-400 mt-1 leading-relaxed">{shot.desc}</span>
               </figcaption>
             </figure>
           ))}
