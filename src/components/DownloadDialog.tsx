@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Apple, MonitorDown, Terminal, X } from "lucide-react";
-import { DOWNLOADS, GROQ_KEYS_URL, LATEST_VERSION, RELEASES_URL, REPO_URL, SELF_HOSTED_DOCS_URL } from "../lib/downloads";
+import { DOWNLOADS, GROQ_KEYS_URL, RELEASES_URL, REPO_URL, SELF_HOSTED_DOCS_URL } from "../lib/downloads";
 
 interface Props {
   open: boolean;
@@ -22,15 +22,15 @@ export default function DownloadDialog({ open, onClose, lang }: Props) {
         win: "Windows",
         mac: "macOS",
         linux: "Linux",
-        winSub: "Портативный .exe · Windows 10+",
-        macSub: "Бинарь · Apple Silicon",
+        winSub: "Установщик · Windows 10+",
+        macSub: "DMG · Apple Silicon",
         linuxSub: "Бинарь · x64",
-        trust: `${LATEST_VERSION} · MIT open source · GitHub Releases`,
-        beta: "Ранние сборки могут показывать предупреждения ОС, пока подпись и notarization финализируются.",
+        trust: "MIT open source · GitHub Releases",
+        beta: "Сборки для macOS подписаны Developer ID и нотаризованы Apple. Сборки для Windows пока без подписи кода — SmartScreen может предупредить при первом запуске: «Подробнее» → «Выполнить всё равно». Проверяйте загрузки на GitHub Releases или собирайте из исходников.",
         groq: "Получить Groq key",
         selfhost: "Self-host инструкция",
         source: "Исходный код",
-        more: "Все пакеты и установщики (.deb, .rpm, setup.exe) на GitHub →",
+        more: "Портативный .zip, .deb, .rpm на GitHub →",
         close: "Закрыть",
       }
     : {
@@ -39,15 +39,15 @@ export default function DownloadDialog({ open, onClose, lang }: Props) {
         win: "Windows",
         mac: "macOS",
         linux: "Linux",
-        winSub: "Portable .exe · Windows 10+",
-        macSub: "Binary · Apple Silicon",
+        winSub: "Installer · Windows 10+",
+        macSub: "DMG · Apple Silicon",
         linuxSub: "Binary · x64",
-        trust: `${LATEST_VERSION} · MIT open source · GitHub Releases`,
-        beta: "Early builds may show OS security warnings while signing and notarization are finalized.",
+        trust: "MIT open source · GitHub Releases",
+        beta: "macOS builds are signed with a Developer ID and notarized by Apple. Windows builds are not code-signed yet — SmartScreen may warn on first run (More info → Run anyway). Verify downloads on GitHub Releases or build from source.",
         groq: "Get a Groq key",
         selfhost: "Self-host setup",
         source: "Source",
-        more: "All packages & installers (.deb, .rpm, setup.exe) on GitHub →",
+        more: "Portable .zip, .deb, .rpm on GitHub →",
         close: "Close",
       };
 

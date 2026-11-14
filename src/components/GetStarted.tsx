@@ -2,7 +2,7 @@ import { Apple, MonitorDown, Terminal, KeyRound } from "lucide-react";
 import Container from "./ui/Container";
 import SectionHeading from "./ui/SectionHeading";
 
-import { DOWNLOADS, GROQ_KEYS_URL, LATEST_VERSION, RELEASES_URL as REL, REPO_URL, SELF_HOSTED_DOCS_URL } from "../lib/downloads";
+import { DOWNLOADS, GROQ_KEYS_URL, RELEASES_URL as REL, REPO_URL, SELF_HOSTED_DOCS_URL } from "../lib/downloads";
 
 export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
   const isRu = lang === "ru";
@@ -17,8 +17,8 @@ export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
         ],
         keyNote:
           "Свой ключ: по умолчанию бесплатный тариф Groq, либо любой OpenAI-совместимый / self-hosted endpoint. Аудио идёт напрямую туда — не через серверы Voxis.",
-        trust: `${LATEST_VERSION} · MIT open source · GitHub Releases`,
-        signing: "Ранние сборки могут показывать предупреждения ОС, пока подпись и notarization финализируются.",
+        trust: "MIT open source · GitHub Releases",
+        signing: "Сборки для macOS подписаны Developer ID и нотаризованы Apple. Сборки для Windows пока без подписи кода — SmartScreen может предупредить при первом запуске: «Подробнее» → «Выполнить всё равно». Проверяйте загрузки на GitHub Releases или собирайте из исходников.",
         groq: "Получить Groq key",
         selfhost: "Self-host инструкция",
         source: "Исходный код",
@@ -26,8 +26,8 @@ export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
         win: "Windows",
         mac: "macOS (Apple Silicon)",
         linux: "Linux",
-        winSub: "Портативный .exe",
-        macSub: "Бинарь или Homebrew",
+        winSub: "Установщик · Windows 10+",
+        macSub: "DMG или Homebrew",
         linuxSub: "Бинарь · .deb · .rpm",
         allPackages: "Все пакеты и установщики →",
       }
@@ -41,8 +41,8 @@ export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
         ],
         keyNote:
           "Bring your own key: the free Groq tier by default, or any OpenAI-compatible / self-hosted endpoint. Audio goes directly there — not through Voxis servers.",
-        trust: `${LATEST_VERSION} · MIT open source · GitHub Releases`,
-        signing: "Early builds may show OS security warnings while signing and notarization are finalized.",
+        trust: "MIT open source · GitHub Releases",
+        signing: "macOS builds are signed with a Developer ID and notarized by Apple. Windows builds are not code-signed yet — SmartScreen may warn on first run (More info → Run anyway). Verify downloads on GitHub Releases or build from source.",
         groq: "Get a Groq key",
         selfhost: "Self-host setup",
         source: "Source",
@@ -50,8 +50,8 @@ export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
         win: "Windows",
         mac: "macOS (Apple Silicon)",
         linux: "Linux",
-        winSub: "Portable .exe",
-        macSub: "Binary or Homebrew",
+        winSub: "Installer · Windows 10+",
+        macSub: "DMG or Homebrew",
         linuxSub: "Binary · .deb · .rpm",
         allPackages: "All packages & installers →",
       };
