@@ -18,7 +18,7 @@ export default function GetStarted({ lang }: { lang: "en" | "ru" }) {
         keyNote:
           "Свой ключ: по умолчанию бесплатный тариф Groq, либо любой OpenAI-совместимый / self-hosted endpoint. Аудио идёт напрямую туда — не через серверы Voxis.",
         trust: "MIT open source · GitHub Releases",
-        signing: "Сборки для macOS подписаны Developer ID и нотаризованы Apple. Сборки для Windows пока без подписи кода — SmartScreen может предупредить при первом запуске: «Подробнее» → «Выполнить всё равно». Проверяйте загрузки на GitHub Releases или собирайте из исходников.",
+        signing: "Сборки для macOS подписаны Developer ID и нотаризованы Apple. Сборки для Windows пока без подписи кода — SmartScreen может предупредить при первом запуске: «Подробнее» → «Выполнить в любом случае». Проверяйте загрузки на GitHub Releases или собирайте из исходников.",
         groq: "Получить Groq key",
         selfhost: "Self-host инструкция",
         source: "Исходный код",

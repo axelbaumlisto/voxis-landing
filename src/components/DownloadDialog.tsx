@@ -26,7 +26,7 @@ export default function DownloadDialog({ open, onClose, lang }: Props) {
         macSub: "DMG · Apple Silicon",
         linuxSub: "Бинарь · x64",
         trust: "MIT open source · GitHub Releases",
-        beta: "Сборки для macOS подписаны Developer ID и нотаризованы Apple. Сборки для Windows пока без подписи кода — SmartScreen может предупредить при первом запуске: «Подробнее» → «Выполнить всё равно». Проверяйте загрузки на GitHub Releases или собирайте из исходников.",
+        beta: "Сборки для macOS подписаны Developer ID и нотаризованы Apple. Сборки для Windows пока без подписи кода — SmartScreen может предупредить при первом запуске: «Подробнее» → «Выполнить в любом случае». Проверяйте загрузки на GitHub Releases или собирайте из исходников.",
         groq: "Получить Groq key",
         selfhost: "Self-host инструкция",
         source: "Исходный код",
